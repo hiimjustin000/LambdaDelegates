@@ -4,6 +4,7 @@
 #include "LambdaDelegates/CCCircleWaveDelegate.hpp"
 #include "LambdaDelegates/CCScrollLayerExtDelegate.hpp"
 #include "LambdaDelegates/CharacterColorDelegate.hpp"
+#include "LambdaDelegates/ColorPickerDelegate.hpp"
 #include "LambdaDelegates/ColorSelectDelegate.hpp"
 #include "LambdaDelegates/ColorSetupDelegate.hpp"
 #include "LambdaDelegates/CommentUploadDelegate.hpp"
