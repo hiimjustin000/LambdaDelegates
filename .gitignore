@@ -1,0 +1,8 @@
+# stuff i use to generate the code
+exclude
+# visual studio code
+.vscode
+# build output
+**/build
+# clangd
+**/.cache
