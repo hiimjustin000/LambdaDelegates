@@ -11,7 +11,7 @@ public:
     std::function<void(gd::string, ShareCommentLayer*)> m_shareCommentClosed;
 
     void shareCommentClosed(gd::string p0, ShareCommentLayer* p1) override {
-        return m_shareCommentClosed(p0, p1);
+        if (m_shareCommentClosed) return m_shareCommentClosed(p0, p1);
     }
 
     static LambdaShareCommentDelegate* create(

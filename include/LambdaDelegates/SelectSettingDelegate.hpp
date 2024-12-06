@@ -10,7 +10,7 @@ public:
     std::function<void(SelectSettingLayer*)> m_selectSettingClosed;
 
     void selectSettingClosed(SelectSettingLayer* p0) override {
-        return m_selectSettingClosed(p0);
+        if (m_selectSettingClosed) return m_selectSettingClosed(p0);
     }
 
     static LambdaSelectSettingDelegate* create(

@@ -14,16 +14,16 @@ public:
     std::function<void(gd::string, char const*)> m_setupPageInfo;
 
     void loadCommentsFinished(cocos2d::CCArray* p0, char const* p1) override {
-        return m_loadCommentsFinished(p0, p1);
+        if (m_loadCommentsFinished) return m_loadCommentsFinished(p0, p1);
     }
     void loadCommentsFailed(char const* p0) override {
-        return m_loadCommentsFailed(p0);
+        if (m_loadCommentsFailed) return m_loadCommentsFailed(p0);
     }
     void updateUserScoreFinished() override {
-        return m_updateUserScoreFinished();
+        if (m_updateUserScoreFinished) return m_updateUserScoreFinished();
     }
     void setupPageInfo(gd::string p0, char const* p1) override {
-        return m_setupPageInfo(p0, p1);
+        if (m_setupPageInfo) return m_setupPageInfo(p0, p1);
     }
 
     static LambdaLevelCommentDelegate* create(

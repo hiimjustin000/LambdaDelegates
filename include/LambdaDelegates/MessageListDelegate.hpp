@@ -14,16 +14,16 @@ public:
     std::function<void(gd::string, char const*)> m_setupPageInfo;
 
     void loadMessagesFinished(cocos2d::CCArray* p0, char const* p1) override {
-        return m_loadMessagesFinished(p0, p1);
+        if (m_loadMessagesFinished) return m_loadMessagesFinished(p0, p1);
     }
     void loadMessagesFailed(char const* p0, GJErrorCode p1) override {
-        return m_loadMessagesFailed(p0, p1);
+        if (m_loadMessagesFailed) return m_loadMessagesFailed(p0, p1);
     }
     void forceReloadMessages(bool p0) override {
-        return m_forceReloadMessages(p0);
+        if (m_forceReloadMessages) return m_forceReloadMessages(p0);
     }
     void setupPageInfo(gd::string p0, char const* p1) override {
-        return m_setupPageInfo(p0, p1);
+        if (m_setupPageInfo) return m_setupPageInfo(p0, p1);
     }
 
     static LambdaMessageListDelegate* create(

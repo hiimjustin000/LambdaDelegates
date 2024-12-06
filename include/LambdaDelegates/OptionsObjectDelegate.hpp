@@ -10,7 +10,7 @@ public:
     std::function<void(OptionsObject*)> m_stateChanged;
 
     void stateChanged(OptionsObject* p0) override {
-        return m_stateChanged(p0);
+        if (m_stateChanged) return m_stateChanged(p0);
     }
 
     static LambdaOptionsObjectDelegate* create(

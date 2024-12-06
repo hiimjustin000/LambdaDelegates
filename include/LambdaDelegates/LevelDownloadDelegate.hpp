@@ -11,10 +11,10 @@ public:
     std::function<void(int)> m_levelDownloadFailed;
 
     void levelDownloadFinished(GJGameLevel* p0) override {
-        return m_levelDownloadFinished(p0);
+        if (m_levelDownloadFinished) return m_levelDownloadFinished(p0);
     }
     void levelDownloadFailed(int p0) override {
-        return m_levelDownloadFailed(p0);
+        if (m_levelDownloadFailed) return m_levelDownloadFailed(p0);
     }
 
     static LambdaLevelDownloadDelegate* create(

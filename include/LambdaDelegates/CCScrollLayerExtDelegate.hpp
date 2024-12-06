@@ -15,22 +15,22 @@ public:
     std::function<void(CCScrollLayerExt*)> m_scrollViewTouchEnd;
 
     void scrllViewWillBeginDecelerating(CCScrollLayerExt* p0) override {
-        return m_scrllViewWillBeginDecelerating(p0);
+        if (m_scrllViewWillBeginDecelerating) return m_scrllViewWillBeginDecelerating(p0);
     }
     void scrollViewDidEndDecelerating(CCScrollLayerExt* p0) override {
-        return m_scrollViewDidEndDecelerating(p0);
+        if (m_scrollViewDidEndDecelerating) return m_scrollViewDidEndDecelerating(p0);
     }
     void scrollViewTouchMoving(CCScrollLayerExt* p0) override {
-        return m_scrollViewTouchMoving(p0);
+        if (m_scrollViewTouchMoving) return m_scrollViewTouchMoving(p0);
     }
     void scrollViewDidEndMoving(CCScrollLayerExt* p0) override {
-        return m_scrollViewDidEndMoving(p0);
+        if (m_scrollViewDidEndMoving) return m_scrollViewDidEndMoving(p0);
     }
     void scrollViewTouchBegin(CCScrollLayerExt* p0) override {
-        return m_scrollViewTouchBegin(p0);
+        if (m_scrollViewTouchBegin) return m_scrollViewTouchBegin(p0);
     }
     void scrollViewTouchEnd(CCScrollLayerExt* p0) override {
-        return m_scrollViewTouchEnd(p0);
+        if (m_scrollViewTouchEnd) return m_scrollViewTouchEnd(p0);
     }
 
     static LambdaCCScrollLayerExtDelegate* create(

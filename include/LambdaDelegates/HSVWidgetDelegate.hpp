@@ -11,10 +11,10 @@ public:
     std::function<void(ConfigureHSVWidget*)> m_hsvChanged;
 
     void hsvPopupClosed(HSVWidgetPopup* p0, cocos2d::ccHSVValue p1) override {
-        return m_hsvPopupClosed(p0, p1);
+        if (m_hsvPopupClosed) return m_hsvPopupClosed(p0, p1);
     }
     void hsvChanged(ConfigureHSVWidget* p0) override {
-        return m_hsvChanged(p0);
+        if (m_hsvChanged) return m_hsvChanged(p0);
     }
 
     static LambdaHSVWidgetDelegate* create(

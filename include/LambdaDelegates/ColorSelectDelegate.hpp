@@ -10,7 +10,7 @@ public:
     std::function<void(cocos2d::CCNode*)> m_colorSelectClosed;
 
     void colorSelectClosed(cocos2d::CCNode* p0) override {
-        return m_colorSelectClosed(p0);
+        if (m_colorSelectClosed) return m_colorSelectClosed(p0);
     }
 
     static LambdaColorSelectDelegate* create(

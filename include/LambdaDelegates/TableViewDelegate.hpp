@@ -16,25 +16,27 @@ public:
     std::function<void(CCIndexPath&, TableView*)> m_didSelectRowAtIndexPath;
 
     void willTweenToIndexPath(CCIndexPath& p0, TableViewCell* p1, TableView* p2) override {
-        return m_willTweenToIndexPath(p0, p1, p2);
+        if (m_willTweenToIndexPath) return m_willTweenToIndexPath(p0, p1, p2);
     }
     void didEndTweenToIndexPath(CCIndexPath& p0, TableView* p1) override {
-        return m_didEndTweenToIndexPath(p0, p1);
+        if (m_didEndTweenToIndexPath) return m_didEndTweenToIndexPath(p0, p1);
     }
     void TableViewWillDisplayCellForRowAtIndexPath(CCIndexPath& p0, TableViewCell* p1, TableView* p2) override {
-        return m_TableViewWillDisplayCellForRowAtIndexPath(p0, p1, p2);
+        if (m_TableViewWillDisplayCellForRowAtIndexPath) return m_TableViewWillDisplayCellForRowAtIndexPath(p0, p1, p2);
     }
     void TableViewDidDisplayCellForRowAtIndexPath(CCIndexPath& p0, TableViewCell* p1, TableView* p2) override {
-        return m_TableViewDidDisplayCellForRowAtIndexPath(p0, p1, p2);
+        if (m_TableViewDidDisplayCellForRowAtIndexPath) return m_TableViewDidDisplayCellForRowAtIndexPath(p0, p1, p2);
     }
     void TableViewWillReloadCellForRowAtIndexPath(CCIndexPath& p0, TableViewCell* p1, TableView* p2) override {
-        return m_TableViewWillReloadCellForRowAtIndexPath(p0, p1, p2);
+        if (m_TableViewWillReloadCellForRowAtIndexPath) return m_TableViewWillReloadCellForRowAtIndexPath(p0, p1, p2);
     }
     float cellHeightForRowAtIndexPath(CCIndexPath& p0, TableView* p1) override {
-        return m_cellHeightForRowAtIndexPath(p0, p1);
+        if (m_cellHeightForRowAtIndexPath) return m_cellHeightForRowAtIndexPath(p0, p1);
+        throw std::runtime_error("Lambda Delegates: TableViewDelegate::cellHeightForRowAtIndexPath not implemented");
     }
     void didSelectRowAtIndexPath(CCIndexPath& p0, TableView* p1) override {
-        return m_didSelectRowAtIndexPath(p0, p1);
+        if (m_didSelectRowAtIndexPath) return m_didSelectRowAtIndexPath(p0, p1);
+        throw std::runtime_error("Lambda Delegates: TableViewDelegate::didSelectRowAtIndexPath not implemented");
     }
 
     static LambdaTableViewDelegate* create(

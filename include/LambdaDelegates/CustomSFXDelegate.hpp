@@ -12,13 +12,15 @@ public:
     std::function<bool(SFXInfoObject*)> m_overridePlaySFX;
 
     void sfxObjectSelected(SFXInfoObject* p0) override {
-        return m_sfxObjectSelected(p0);
+        if (m_sfxObjectSelected) return m_sfxObjectSelected(p0);
     }
     int getActiveSFXID() override {
-        return m_getActiveSFXID();
+        if (m_getActiveSFXID) return m_getActiveSFXID();
+        return 0;
     }
     bool overridePlaySFX(SFXInfoObject* p0) override {
-        return m_overridePlaySFX(p0);
+        if (m_overridePlaySFX) return m_overridePlaySFX(p0);
+        return false;
     }
 
     static LambdaCustomSFXDelegate* create(

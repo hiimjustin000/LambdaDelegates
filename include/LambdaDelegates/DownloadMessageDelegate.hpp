@@ -11,10 +11,10 @@ public:
     std::function<void(int)> m_downloadMessageFailed;
 
     void downloadMessageFinished(GJUserMessage* p0) override {
-        return m_downloadMessageFinished(p0);
+        if (m_downloadMessageFinished) return m_downloadMessageFinished(p0);
     }
     void downloadMessageFailed(int p0) override {
-        return m_downloadMessageFailed(p0);
+        if (m_downloadMessageFailed) return m_downloadMessageFailed(p0);
     }
 
     static LambdaDownloadMessageDelegate* create(

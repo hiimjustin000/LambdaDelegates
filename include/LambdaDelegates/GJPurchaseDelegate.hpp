@@ -10,7 +10,7 @@ public:
     std::function<void(GJStoreItem*)> m_didPurchaseItem;
 
     void didPurchaseItem(GJStoreItem* p0) override {
-        return m_didPurchaseItem(p0);
+        if (m_didPurchaseItem) return m_didPurchaseItem(p0);
     }
 
     static LambdaGJPurchaseDelegate* create(

@@ -10,7 +10,7 @@ public:
     std::function<void(MusicBrowser*)> m_musicBrowserClosed;
 
     void musicBrowserClosed(MusicBrowser* p0) override {
-        return m_musicBrowserClosed(p0);
+        if (m_musicBrowserClosed) return m_musicBrowserClosed(p0);
     }
 
     static LambdaMusicBrowserDelegate* create(

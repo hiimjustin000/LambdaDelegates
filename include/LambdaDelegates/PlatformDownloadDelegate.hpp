@@ -11,10 +11,10 @@ public:
     std::function<void(char const*)> m_downloadFailed;
 
     void downloadFinished(char const* p0) override {
-        return m_downloadFinished(p0);
+        if (m_downloadFinished) return m_downloadFinished(p0);
     }
     void downloadFailed(char const* p0) override {
-        return m_downloadFailed(p0);
+        if (m_downloadFailed) return m_downloadFailed(p0);
     }
 
     static LambdaPlatformDownloadDelegate* create(

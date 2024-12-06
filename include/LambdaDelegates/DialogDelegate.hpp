@@ -10,7 +10,7 @@ public:
     std::function<void(DialogLayer*)> m_dialogClosed;
 
     void dialogClosed(DialogLayer* p0) override {
-        return m_dialogClosed(p0);
+        if (m_dialogClosed) return m_dialogClosed(p0);
     }
 
     static LambdaDialogDelegate* create(

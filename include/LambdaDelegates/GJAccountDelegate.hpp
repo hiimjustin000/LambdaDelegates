@@ -10,7 +10,7 @@ public:
     std::function<void()> m_accountStatusChanged;
 
     void accountStatusChanged() override {
-        return m_accountStatusChanged();
+        if (m_accountStatusChanged) return m_accountStatusChanged();
     }
 
     static LambdaGJAccountDelegate* create(

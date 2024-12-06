@@ -13,13 +13,13 @@ public:
     std::function<void(gd::string, char const*)> m_setupPageInfo;
 
     void loadListFinished(cocos2d::CCArray* p0, char const* p1) override {
-        return m_loadListFinished(p0, p1);
+        if (m_loadListFinished) return m_loadListFinished(p0, p1);
     }
     void loadListFailed(char const* p0) override {
-        return m_loadListFailed(p0);
+        if (m_loadListFailed) return m_loadListFailed(p0);
     }
     void setupPageInfo(gd::string p0, char const* p1) override {
-        return m_setupPageInfo(p0, p1);
+        if (m_setupPageInfo) return m_setupPageInfo(p0, p1);
     }
 
     static LambdaOnlineListDelegate* create(

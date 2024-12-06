@@ -11,10 +11,10 @@ public:
     std::function<void(GJLevelList*, int)> m_listUploadFailed;
 
     void listUploadFinished(GJLevelList* p0) override {
-        return m_listUploadFinished(p0);
+        if (m_listUploadFinished) return m_listUploadFinished(p0);
     }
     void listUploadFailed(GJLevelList* p0, int p1) override {
-        return m_listUploadFailed(p0, p1);
+        if (m_listUploadFailed) return m_listUploadFailed(p0, p1);
     }
 
     static LambdaListUploadDelegate* create(

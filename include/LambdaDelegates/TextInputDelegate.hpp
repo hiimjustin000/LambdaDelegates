@@ -16,25 +16,26 @@ public:
     std::function<void(CCTextInputNode*)> m_enterPressed;
 
     void textChanged(CCTextInputNode* p0) override {
-        return m_textChanged(p0);
+        if (m_textChanged) return m_textChanged(p0);
     }
     void textInputOpened(CCTextInputNode* p0) override {
-        return m_textInputOpened(p0);
+        if (m_textInputOpened) return m_textInputOpened(p0);
     }
     void textInputClosed(CCTextInputNode* p0) override {
-        return m_textInputClosed(p0);
+        if (m_textInputClosed) return m_textInputClosed(p0);
     }
     void textInputShouldOffset(CCTextInputNode* p0, float p1) override {
-        return m_textInputShouldOffset(p0, p1);
+        if (m_textInputShouldOffset) return m_textInputShouldOffset(p0, p1);
     }
     void textInputReturn(CCTextInputNode* p0) override {
-        return m_textInputReturn(p0);
+        if (m_textInputReturn) return m_textInputReturn(p0);
     }
     bool allowTextInput(CCTextInputNode* p0) override {
-        return m_allowTextInput(p0);
+        if (m_allowTextInput) return m_allowTextInput(p0);
+        return true;
     }
     void enterPressed(CCTextInputNode* p0) override {
-        return m_enterPressed(p0);
+        if (m_enterPressed) return m_enterPressed(p0);
     }
 
     static LambdaTextInputDelegate* create(

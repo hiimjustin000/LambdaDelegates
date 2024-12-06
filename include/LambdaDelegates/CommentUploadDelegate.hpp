@@ -12,13 +12,13 @@ public:
     std::function<void(int, int)> m_commentDeleteFailed;
 
     void commentUploadFinished(int p0) override {
-        return m_commentUploadFinished(p0);
+        if (m_commentUploadFinished) return m_commentUploadFinished(p0);
     }
     void commentUploadFailed(int p0, CommentError p1) override {
-        return m_commentUploadFailed(p0, p1);
+        if (m_commentUploadFailed) return m_commentUploadFailed(p0, p1);
     }
     void commentDeleteFailed(int p0, int p1) override {
-        return m_commentDeleteFailed(p0, p1);
+        if (m_commentDeleteFailed) return m_commentDeleteFailed(p0, p1);
     }
 
     static LambdaCommentUploadDelegate* create(

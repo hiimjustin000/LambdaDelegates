@@ -10,7 +10,7 @@ public:
     std::function<void(cocos2d::ccColor3B)> m_colorValueChanged;
 
     void colorValueChanged(cocos2d::ccColor3B p0) override {
-        return m_colorValueChanged(p0);
+        if (m_colorValueChanged) return m_colorValueChanged(p0);
     }
 
     static LambdaColorPickerDelegate* create(

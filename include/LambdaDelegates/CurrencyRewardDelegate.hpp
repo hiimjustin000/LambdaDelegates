@@ -10,7 +10,7 @@ public:
     std::function<void(CurrencyRewardLayer*)> m_currencyWillExit;
 
     void currencyWillExit(CurrencyRewardLayer* p0) override {
-        return m_currencyWillExit(p0);
+        if (m_currencyWillExit) return m_currencyWillExit(p0);
     }
 
     static LambdaCurrencyRewardDelegate* create(

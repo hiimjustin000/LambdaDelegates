@@ -12,13 +12,13 @@ public:
     std::function<void(GJUserScore*)> m_userInfoChanged;
 
     void getUserInfoFinished(GJUserScore* p0) override {
-        return m_getUserInfoFinished(p0);
+        if (m_getUserInfoFinished) return m_getUserInfoFinished(p0);
     }
     void getUserInfoFailed(int p0) override {
-        return m_getUserInfoFailed(p0);
+        if (m_getUserInfoFailed) return m_getUserInfoFailed(p0);
     }
     void userInfoChanged(GJUserScore* p0) override {
-        return m_userInfoChanged(p0);
+        if (m_userInfoChanged) return m_userInfoChanged(p0);
     }
 
     static LambdaUserInfoDelegate* create(

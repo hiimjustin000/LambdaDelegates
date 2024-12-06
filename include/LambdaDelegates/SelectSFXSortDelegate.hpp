@@ -10,7 +10,7 @@ public:
     std::function<void(SelectSFXSortLayer*)> m_sortSelectClosed;
 
     void sortSelectClosed(SelectSFXSortLayer* p0) override {
-        return m_sortSelectClosed(p0);
+        if (m_sortSelectClosed) return m_sortSelectClosed(p0);
     }
 
     static LambdaSelectSFXSortDelegate* create(

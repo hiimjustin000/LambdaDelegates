@@ -14,16 +14,19 @@ public:
     std::function<LevelSettingsObject*()> m_getLevelSettings;
 
     void songIDChanged(int p0) override {
-        return m_songIDChanged(p0);
+        if (m_songIDChanged) return m_songIDChanged(p0);
     }
     int getActiveSongID() override {
-        return m_getActiveSongID();
+        if (m_getActiveSongID) return m_getActiveSongID();
+        return 0;
     }
     gd::string getSongFileName() override {
-        return m_getSongFileName();
+        if (m_getSongFileName) return m_getSongFileName();
+        throw std::runtime_error("Lambda Delegates: CustomSongDelegate::getSongFileName not implemented");
     }
     LevelSettingsObject* getLevelSettings() override {
-        return m_getLevelSettings();
+        if (m_getLevelSettings) return m_getLevelSettings();
+        throw std::runtime_error("Lambda Delegates: CustomSongDelegate::getLevelSettings not implemented");
     }
 
     static LambdaCustomSongDelegate* create(

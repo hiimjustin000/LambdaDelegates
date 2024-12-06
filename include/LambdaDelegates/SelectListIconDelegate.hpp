@@ -10,7 +10,7 @@ public:
     std::function<void(SelectListIconLayer*)> m_iconSelectClosed;
 
     void iconSelectClosed(SelectListIconLayer* p0) override {
-        return m_iconSelectClosed(p0);
+        if (m_iconSelectClosed) return m_iconSelectClosed(p0);
     }
 
     static LambdaSelectListIconDelegate* create(

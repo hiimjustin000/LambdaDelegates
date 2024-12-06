@@ -10,7 +10,7 @@ public:
     std::function<void(SelectPremadeLayer*, int)> m_selectPremadeClosed;
 
     void selectPremadeClosed(SelectPremadeLayer* p0, int p1) override {
-        return m_selectPremadeClosed(p0, p1);
+        if (m_selectPremadeClosed) return m_selectPremadeClosed(p0, p1);
     }
 
     static LambdaSelectPremadeDelegate* create(

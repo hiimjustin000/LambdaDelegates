@@ -11,10 +11,10 @@ public:
     std::function<void(int, int)> m_uploadActionFailed;
 
     void uploadActionFinished(int p0, int p1) override {
-        return m_uploadActionFinished(p0, p1);
+        if (m_uploadActionFinished) return m_uploadActionFinished(p0, p1);
     }
     void uploadActionFailed(int p0, int p1) override {
-        return m_uploadActionFailed(p0, p1);
+        if (m_uploadActionFailed) return m_uploadActionFailed(p0, p1);
     }
 
     static LambdaUploadActionDelegate* create(

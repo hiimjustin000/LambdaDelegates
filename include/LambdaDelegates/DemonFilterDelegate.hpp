@@ -10,7 +10,7 @@ public:
     std::function<void(int)> m_demonFilterSelectClosed;
 
     void demonFilterSelectClosed(int p0) override {
-        return m_demonFilterSelectClosed(p0);
+        if (m_demonFilterSelectClosed) return m_demonFilterSelectClosed(p0);
     }
 
     static LambdaDemonFilterDelegate* create(

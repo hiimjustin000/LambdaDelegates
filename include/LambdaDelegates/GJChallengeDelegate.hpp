@@ -11,10 +11,10 @@ public:
     std::function<void()> m_challengeStatusFailed;
 
     void challengeStatusFinished() override {
-        return m_challengeStatusFinished();
+        if (m_challengeStatusFinished) return m_challengeStatusFinished();
     }
     void challengeStatusFailed() override {
-        return m_challengeStatusFailed();
+        if (m_challengeStatusFailed) return m_challengeStatusFailed();
     }
 
     static LambdaGJChallengeDelegate* create(

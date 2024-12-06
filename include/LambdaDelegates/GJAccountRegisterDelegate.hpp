@@ -11,10 +11,10 @@ public:
     std::function<void(AccountError)> m_registerAccountFailed;
 
     void registerAccountFinished() override {
-        return m_registerAccountFinished();
+        if (m_registerAccountFinished) return m_registerAccountFinished();
     }
     void registerAccountFailed(AccountError p0) override {
-        return m_registerAccountFailed(p0);
+        if (m_registerAccountFailed) return m_registerAccountFailed(p0);
     }
 
     static LambdaGJAccountRegisterDelegate* create(

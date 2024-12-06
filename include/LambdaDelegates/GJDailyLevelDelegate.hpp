@@ -11,10 +11,10 @@ public:
     std::function<void(GJTimedLevelType, GJErrorCode)> m_dailyStatusFailed;
 
     void dailyStatusFinished(GJTimedLevelType p0) override {
-        return m_dailyStatusFinished(p0);
+        if (m_dailyStatusFinished) return m_dailyStatusFinished(p0);
     }
     void dailyStatusFailed(GJTimedLevelType p0, GJErrorCode p1) override {
-        return m_dailyStatusFailed(p0, p1);
+        if (m_dailyStatusFailed) return m_dailyStatusFailed(p0, p1);
     }
 
     static LambdaGJDailyLevelDelegate* create(

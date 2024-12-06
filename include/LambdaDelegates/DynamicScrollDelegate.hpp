@@ -10,7 +10,8 @@ public:
     std::function<void(cocos2d::CCObject*, cocos2d::CCObject*)> m_updatePageWithObject;
 
     void updatePageWithObject(cocos2d::CCObject* p0, cocos2d::CCObject* p1) override {
-        return m_updatePageWithObject(p0, p1);
+        if (m_updatePageWithObject) return m_updatePageWithObject(p0, p1);
+        throw std::runtime_error("Lambda Delegates: DynamicScrollDelegate::updatePageWithObject not implemented");
     }
 
     static LambdaDynamicScrollDelegate* create(

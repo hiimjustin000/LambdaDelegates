@@ -11,10 +11,10 @@ public:
     std::function<void(int, UnlockType)> m_showUnlockPopup;
 
     void playerColorChanged() override {
-        return m_playerColorChanged();
+        if (m_playerColorChanged) return m_playerColorChanged();
     }
     void showUnlockPopup(int p0, UnlockType p1) override {
-        return m_showUnlockPopup(p0, p1);
+        if (m_showUnlockPopup) return m_showUnlockPopup(p0, p1);
     }
 
     static LambdaCharacterColorDelegate* create(

@@ -10,7 +10,7 @@ public:
     std::function<void(TextArea*)> m_fadeInTextFinished;
 
     void fadeInTextFinished(TextArea* p0) override {
-        return m_fadeInTextFinished(p0);
+        if (m_fadeInTextFinished) return m_fadeInTextFinished(p0);
     }
 
     static LambdaTextAreaDelegate* create(

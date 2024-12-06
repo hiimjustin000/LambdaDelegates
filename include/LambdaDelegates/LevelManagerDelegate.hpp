@@ -15,19 +15,19 @@ public:
     std::function<void(gd::string, char const*)> m_setupPageInfo;
 
     void loadLevelsFinished(cocos2d::CCArray* p0, char const* p1) override {
-        return m_loadLevelsFinished1(p0, p1);
+        if (m_loadLevelsFinished1) return m_loadLevelsFinished1(p0, p1);
     }
     void loadLevelsFailed(char const* p0) override {
-        return m_loadLevelsFailed1(p0);
+        if (m_loadLevelsFailed1) return m_loadLevelsFailed1(p0);
     }
     void loadLevelsFinished(cocos2d::CCArray* p0, char const* p1, int p2) override {
-        return m_loadLevelsFinished2(p0, p1, p2);
+        if (m_loadLevelsFinished2) return m_loadLevelsFinished2(p0, p1, p2);
     }
     void loadLevelsFailed(char const* p0, int p1) override {
-        return m_loadLevelsFailed2(p0, p1);
+        if (m_loadLevelsFailed2) return m_loadLevelsFailed2(p0, p1);
     }
     void setupPageInfo(gd::string p0, char const* p1) override {
-        return m_setupPageInfo(p0, p1);
+        if (m_setupPageInfo) return m_setupPageInfo(p0, p1);
     }
 
     static LambdaLevelManagerDelegate* create(

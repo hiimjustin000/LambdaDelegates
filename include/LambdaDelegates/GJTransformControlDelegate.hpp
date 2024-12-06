@@ -25,52 +25,54 @@ public:
     std::function<cocos2d::CCLayer*()> m_getUI;
 
     void transformScaleXChanged(float p0) override {
-        return m_transformScaleXChanged(p0);
+        if (m_transformScaleXChanged) return m_transformScaleXChanged(p0);
     }
     void transformScaleYChanged(float p0) override {
-        return m_transformScaleYChanged(p0);
+        if (m_transformScaleYChanged) return m_transformScaleYChanged(p0);
     }
     void transformScaleXYChanged(float p0, float p1) override {
-        return m_transformScaleXYChanged(p0, p1);
+        if (m_transformScaleXYChanged) return m_transformScaleXYChanged(p0, p1);
     }
     void transformRotationXChanged(float p0) override {
-        return m_transformRotationXChanged(p0);
+        if (m_transformRotationXChanged) return m_transformRotationXChanged(p0);
     }
     void transformRotationYChanged(float p0) override {
-        return m_transformRotationYChanged(p0);
+        if (m_transformRotationYChanged) return m_transformRotationYChanged(p0);
     }
     void transformRotationChanged(float p0) override {
-        return m_transformRotationChanged(p0);
+        if (m_transformRotationChanged) return m_transformRotationChanged(p0);
     }
     void transformResetRotation() override {
-        return m_transformResetRotation();
+        if (m_transformResetRotation) return m_transformResetRotation();
     }
     void transformRestoreRotation() override {
-        return m_transformRestoreRotation();
+        if (m_transformRestoreRotation) return m_transformRestoreRotation();
     }
     void transformSkewXChanged(float p0) override {
-        return m_transformSkewXChanged(p0);
+        if (m_transformSkewXChanged) return m_transformSkewXChanged(p0);
     }
     void transformSkewYChanged(float p0) override {
-        return m_transformSkewYChanged(p0);
+        if (m_transformSkewYChanged) return m_transformSkewYChanged(p0);
     }
     void transformChangeBegin() override {
-        return m_transformChangeBegin();
+        if (m_transformChangeBegin) return m_transformChangeBegin();
     }
     void transformChangeEnded() override {
-        return m_transformChangeEnded();
+        if (m_transformChangeEnded) return m_transformChangeEnded();
     }
     void updateTransformControl() override {
-        return m_updateTransformControl();
+        if (m_updateTransformControl) return m_updateTransformControl();
     }
     void anchorPointMoved(cocos2d::CCPoint p0) override {
-        return m_anchorPointMoved(p0);
+        if (m_anchorPointMoved) return m_anchorPointMoved(p0);
     }
     cocos2d::CCNode* getTransformNode() override {
-        return m_getTransformNode();
+        if (m_getTransformNode) return m_getTransformNode();
+        return nullptr;
     }
     cocos2d::CCLayer* getUI() override {
-        return m_getUI();
+        if (m_getUI) return m_getUI();
+        return nullptr;
     }
 
     static LambdaGJTransformControlDelegate* create(

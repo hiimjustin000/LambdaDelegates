@@ -10,7 +10,7 @@ public:
     std::function<void(LikeItemType, int, bool)> m_likedItem;
 
     void likedItem(LikeItemType p0, int p1, bool p2) override {
-        return m_likedItem(p0, p1, p2);
+        if (m_likedItem) return m_likedItem(p0, p1, p2);
     }
 
     static LambdaLikeItemDelegate* create(

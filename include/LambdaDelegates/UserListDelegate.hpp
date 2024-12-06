@@ -13,16 +13,16 @@ public:
     std::function<void(UserListType)> m_forceReloadList;
 
     void getUserListFinished(cocos2d::CCArray* p0, UserListType p1) override {
-        return m_getUserListFinished(p0, p1);
+        if (m_getUserListFinished) return m_getUserListFinished(p0, p1);
     }
     void getUserListFailed(UserListType p0, GJErrorCode p1) override {
-        return m_getUserListFailed(p0, p1);
+        if (m_getUserListFailed) return m_getUserListFailed(p0, p1);
     }
     void userListChanged(cocos2d::CCArray* p0, UserListType p1) override {
-        return m_userListChanged(p0, p1);
+        if (m_userListChanged) return m_userListChanged(p0, p1);
     }
     void forceReloadList(UserListType p0) override {
-        return m_forceReloadList(p0);
+        if (m_forceReloadList) return m_forceReloadList(p0);
     }
 
     static LambdaUserListDelegate* create(

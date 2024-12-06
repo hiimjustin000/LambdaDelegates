@@ -10,7 +10,7 @@ public:
     std::function<void()> m_rateLevelClosed;
 
     void rateLevelClosed() override {
-        return m_rateLevelClosed();
+        if (m_rateLevelClosed) return m_rateLevelClosed();
     }
 
     static LambdaRateLevelDelegate* create(

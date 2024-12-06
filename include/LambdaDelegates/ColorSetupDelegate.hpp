@@ -10,7 +10,7 @@ public:
     std::function<void(int)> m_colorSetupClosed;
 
     void colorSetupClosed(int p0) override {
-        return m_colorSetupClosed(p0);
+        if (m_colorSetupClosed) return m_colorSetupClosed(p0);
     }
 
     static LambdaColorSetupDelegate* create(

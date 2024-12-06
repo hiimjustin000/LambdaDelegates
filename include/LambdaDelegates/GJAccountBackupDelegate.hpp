@@ -11,10 +11,10 @@ public:
     std::function<void(BackupAccountError, int)> m_backupAccountFailed;
 
     void backupAccountFinished() override {
-        return m_backupAccountFinished();
+        if (m_backupAccountFinished) return m_backupAccountFinished();
     }
     void backupAccountFailed(BackupAccountError p0, int p1) override {
-        return m_backupAccountFailed(p0, p1);
+        if (m_backupAccountFailed) return m_backupAccountFailed(p0, p1);
     }
 
     static LambdaGJAccountBackupDelegate* create(

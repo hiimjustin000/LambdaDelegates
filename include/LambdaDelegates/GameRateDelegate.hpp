@@ -10,7 +10,7 @@ public:
     std::function<void()> m_updateRate;
 
     void updateRate() override {
-        return m_updateRate();
+        if (m_updateRate) return m_updateRate();
     }
 
     static LambdaGameRateDelegate* create(

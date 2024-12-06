@@ -10,7 +10,7 @@ public:
     std::function<void(CCCircleWave*)> m_circleWaveWillBeRemoved;
 
     void circleWaveWillBeRemoved(CCCircleWave* p0) override {
-        return m_circleWaveWillBeRemoved(p0);
+        if (m_circleWaveWillBeRemoved) return m_circleWaveWillBeRemoved(p0);
     }
 
     static LambdaCCCircleWaveDelegate* create(

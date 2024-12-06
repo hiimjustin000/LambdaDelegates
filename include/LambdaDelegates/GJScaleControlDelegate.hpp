@@ -16,25 +16,25 @@ public:
     std::function<void(cocos2d::CCPoint)> m_anchorPointMoved;
 
     void scaleXChanged(float p0, bool p1) override {
-        return m_scaleXChanged(p0, p1);
+        if (m_scaleXChanged) return m_scaleXChanged(p0, p1);
     }
     void scaleYChanged(float p0, bool p1) override {
-        return m_scaleYChanged(p0, p1);
+        if (m_scaleYChanged) return m_scaleYChanged(p0, p1);
     }
     void scaleXYChanged(float p0, float p1, bool p2) override {
-        return m_scaleXYChanged(p0, p1, p2);
+        if (m_scaleXYChanged) return m_scaleXYChanged(p0, p1, p2);
     }
     void scaleChangeBegin() override {
-        return m_scaleChangeBegin();
+        if (m_scaleChangeBegin) return m_scaleChangeBegin();
     }
     void scaleChangeEnded() override {
-        return m_scaleChangeEnded();
+        if (m_scaleChangeEnded) return m_scaleChangeEnded();
     }
     void updateScaleControl() override {
-        return m_updateScaleControl();
+        if (m_updateScaleControl) return m_updateScaleControl();
     }
     void anchorPointMoved(cocos2d::CCPoint p0) override {
-        return m_anchorPointMoved(p0);
+        if (m_anchorPointMoved) return m_anchorPointMoved(p0);
     }
 
     static LambdaGJScaleControlDelegate* create(

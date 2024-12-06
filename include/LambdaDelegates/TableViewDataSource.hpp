@@ -13,16 +13,19 @@ public:
     std::function<TableViewCell*(CCIndexPath&, TableView*)> m_cellForRowAtIndexPath;
 
     int numberOfRowsInSection(unsigned int p0, TableView* p1) override {
-        return m_numberOfRowsInSection(p0, p1);
+        if (m_numberOfRowsInSection) return m_numberOfRowsInSection(p0, p1);
+        throw std::runtime_error("Lambda Delegates: TableViewDataSource::numberOfRowsInSection not implemented");
     }
     unsigned int numberOfSectionsInTableView(TableView* p0) override {
-        return m_numberOfSectionsInTableView(p0);
+        if (m_numberOfSectionsInTableView) return m_numberOfSectionsInTableView(p0);
+        return 1;
     }
     void TableViewCommitCellEditingStyleForRowAtIndexPath(TableView* p0, TableViewCellEditingStyle p1, CCIndexPath& p2) override {
-        return m_TableViewCommitCellEditingStyleForRowAtIndexPath(p0, p1, p2);
+        if (m_TableViewCommitCellEditingStyleForRowAtIndexPath) return m_TableViewCommitCellEditingStyleForRowAtIndexPath(p0, p1, p2);
     }
     TableViewCell* cellForRowAtIndexPath(CCIndexPath& p0, TableView* p1) override {
-        return m_cellForRowAtIndexPath(p0, p1);
+        if (m_cellForRowAtIndexPath) return m_cellForRowAtIndexPath(p0, p1);
+        throw std::runtime_error("Lambda Delegates: TableViewDataSource::cellForRowAtIndexPath not implemented");
     }
 
     static LambdaTableViewDataSource* create(

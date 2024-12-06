@@ -10,7 +10,7 @@ public:
     std::function<void(ConfigureValuePopup*, float)> m_valuePopupClosed;
 
     void valuePopupClosed(ConfigureValuePopup* p0, float p1) override {
-        return m_valuePopupClosed(p0, p1);
+        if (m_valuePopupClosed) return m_valuePopupClosed(p0, p1);
     }
 
     static LambdaConfigureValuePopupDelegate* create(

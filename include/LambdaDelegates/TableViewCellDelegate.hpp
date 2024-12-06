@@ -13,16 +13,20 @@ public:
     std::function<int()> m_getCellDelegateType;
 
     bool cellPerformedAction(TableViewCell* p0, int p1, CellAction p2, cocos2d::CCNode* p3) override {
-        return m_cellPerformedAction(p0, p1, p2, p3);
+        if (m_cellPerformedAction) return m_cellPerformedAction(p0, p1, p2, p3);
+        return false;
     }
     int getSelectedCellIdx() override {
-        return m_getSelectedCellIdx();
+        if (m_getSelectedCellIdx) return m_getSelectedCellIdx();
+        return 0;
     }
     bool shouldSnapToSelected() override {
-        return m_shouldSnapToSelected();
+        if (m_shouldSnapToSelected) return m_shouldSnapToSelected();
+        return true;
     }
     int getCellDelegateType() override {
-        return m_getCellDelegateType();
+        if (m_getCellDelegateType) return m_getCellDelegateType();
+        return 0;
     }
 
     static LambdaTableViewCellDelegate* create(

@@ -11,10 +11,10 @@ public:
     std::function<void(int)> m_levelListDeleteFailed;
 
     void levelListDeleteFinished(int p0) override {
-        return m_levelListDeleteFinished(p0);
+        if (m_levelListDeleteFinished) return m_levelListDeleteFinished(p0);
     }
     void levelListDeleteFailed(int p0) override {
-        return m_levelListDeleteFailed(p0);
+        if (m_levelListDeleteFailed) return m_levelListDeleteFailed(p0);
     }
 
     static LambdaLevelListDeleteDelegate* create(

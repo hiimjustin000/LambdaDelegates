@@ -11,10 +11,10 @@ public:
     std::function<void(Slider*)> m_sliderEnded;
 
     void sliderBegan(Slider* p0) override {
-        return m_sliderBegan(p0);
+        if (m_sliderBegan) return m_sliderBegan(p0);
     }
     void sliderEnded(Slider* p0) override {
-        return m_sliderEnded(p0);
+        if (m_sliderEnded) return m_sliderEnded(p0);
     }
 
     static LambdaSliderDelegate* create(

@@ -10,7 +10,7 @@ public:
     std::function<void()> m_customSongLayerClosed;
 
     void customSongLayerClosed() override {
-        return m_customSongLayerClosed();
+        if (m_customSongLayerClosed) return m_customSongLayerClosed();
     }
 
     static LambdaCustomSongLayerDelegate* create(

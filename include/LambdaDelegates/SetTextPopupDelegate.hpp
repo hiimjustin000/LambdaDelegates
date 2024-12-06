@@ -11,7 +11,7 @@ public:
     std::function<void(SetTextPopup*, gd::string)> m_setTextPopupClosed;
 
     void setTextPopupClosed(SetTextPopup* p0, gd::string p1) override {
-        return m_setTextPopupClosed(p0, p1);
+        if (m_setTextPopupClosed) return m_setTextPopupClosed(p0, p1);
     }
 
     static LambdaSetTextPopupDelegate* create(

@@ -13,16 +13,16 @@ public:
     std::function<void()> m_updateComments;
 
     void joinLobbyFinished(int p0) override {
-        return m_joinLobbyFinished(p0);
+        if (m_joinLobbyFinished) return m_joinLobbyFinished(p0);
     }
     void joinLobbyFailed(int p0, GJMPErrorCode p1) override {
-        return m_joinLobbyFailed(p0, p1);
+        if (m_joinLobbyFailed) return m_joinLobbyFailed(p0, p1);
     }
     void didUploadMPComment(int p0) override {
-        return m_didUploadMPComment(p0);
+        if (m_didUploadMPComment) return m_didUploadMPComment(p0);
     }
     void updateComments() override {
-        return m_updateComments();
+        if (m_updateComments) return m_updateComments();
     }
 
     static LambdaGJMPDelegate* create(

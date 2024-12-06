@@ -10,7 +10,7 @@ public:
     std::function<void(char const*)> m_animationFinished;
 
     void animationFinished(char const* p0) override {
-        return m_animationFinished(p0);
+        if (m_animationFinished) return m_animationFinished(p0);
     }
 
     static LambdaAnimatedSpriteDelegate* create(

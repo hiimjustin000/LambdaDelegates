@@ -11,10 +11,11 @@ public:
     std::function<bool()> m_shouldOffsetRewardCurrency;
 
     void rewardedVideoFinished() override {
-        return m_rewardedVideoFinished();
+        if (m_rewardedVideoFinished) return m_rewardedVideoFinished();
     }
     bool shouldOffsetRewardCurrency() override {
-        return m_shouldOffsetRewardCurrency();
+        if (m_shouldOffsetRewardCurrency) return m_shouldOffsetRewardCurrency();
+        return false;
     }
 
     static LambdaRewardedVideoDelegate* create(

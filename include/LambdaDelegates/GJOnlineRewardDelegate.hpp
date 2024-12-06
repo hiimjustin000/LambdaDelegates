@@ -12,10 +12,10 @@ public:
     std::function<void()> m_onlineRewardStatusFailed;
 
     void onlineRewardStatusFinished(gd::string p0) override {
-        return m_onlineRewardStatusFinished(p0);
+        if (m_onlineRewardStatusFinished) return m_onlineRewardStatusFinished(p0);
     }
     void onlineRewardStatusFailed() override {
-        return m_onlineRewardStatusFailed();
+        if (m_onlineRewardStatusFailed) return m_onlineRewardStatusFailed();
     }
 
     static LambdaGJOnlineRewardDelegate* create(

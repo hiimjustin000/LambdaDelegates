@@ -10,7 +10,7 @@ public:
     std::function<void(ListButtonBar*, int)> m_listButtonBarSwitchedPage;
 
     void listButtonBarSwitchedPage(ListButtonBar* p0, int p1) override {
-        return m_listButtonBarSwitchedPage(p0, p1);
+        if (m_listButtonBarSwitchedPage) return m_listButtonBarSwitchedPage(p0, p1);
     }
 
     static LambdaListButtonBarDelegate* create(

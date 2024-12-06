@@ -13,13 +13,16 @@ public:
     std::function<void(GameObject*, double, gd::vector<int> const&)> m_spawnObject;
 
     void toggleGroupTriggered(int p0, bool p1, gd::vector<int> const& p2, int p3, int p4) override {
-        return m_toggleGroupTriggered(p0, p1, p2, p3, p4);
+        if (m_toggleGroupTriggered) return m_toggleGroupTriggered(p0, p1, p2, p3, p4);
+        throw std::runtime_error("Lambda Delegates: TriggerEffectDelegate::toggleGroupTriggered not implemented");
     }
     void spawnGroup(int p0, bool p1, double p2, gd::vector<int> const& p3, int p4, int p5) override {
-        return m_spawnGroup(p0, p1, p2, p3, p4, p5);
+        if (m_spawnGroup) return m_spawnGroup(p0, p1, p2, p3, p4, p5);
+        throw std::runtime_error("Lambda Delegates: TriggerEffectDelegate::spawnGroup not implemented");
     }
     void spawnObject(GameObject* p0, double p1, gd::vector<int> const& p2) override {
-        return m_spawnObject(p0, p1, p2);
+        if (m_spawnObject) return m_spawnObject(p0, p1, p2);
+        throw std::runtime_error("Lambda Delegates: TriggerEffectDelegate::spawnObject not implemented");
     }
 
     static LambdaTriggerEffectDelegate* create(

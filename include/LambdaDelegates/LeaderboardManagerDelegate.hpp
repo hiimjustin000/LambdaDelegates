@@ -13,16 +13,16 @@ public:
     std::function<void(char const*)> m_loadLeaderboardFailed;
 
     void updateUserScoreFinished() override {
-        return m_updateUserScoreFinished();
+        if (m_updateUserScoreFinished) return m_updateUserScoreFinished();
     }
     void updateUserScoreFailed() override {
-        return m_updateUserScoreFailed();
+        if (m_updateUserScoreFailed) return m_updateUserScoreFailed();
     }
     void loadLeaderboardFinished(cocos2d::CCArray* p0, char const* p1) override {
-        return m_loadLeaderboardFinished(p0, p1);
+        if (m_loadLeaderboardFinished) return m_loadLeaderboardFinished(p0, p1);
     }
     void loadLeaderboardFailed(char const* p0) override {
-        return m_loadLeaderboardFailed(p0);
+        if (m_loadLeaderboardFailed) return m_loadLeaderboardFailed(p0);
     }
 
     static LambdaLeaderboardManagerDelegate* create(

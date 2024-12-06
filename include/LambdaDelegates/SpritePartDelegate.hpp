@@ -11,7 +11,7 @@ public:
     std::function<void(cocos2d::CCObject*, gd::string)> m_displayFrameChanged;
 
     void displayFrameChanged(cocos2d::CCObject* p0, gd::string p1) override {
-        return m_displayFrameChanged(p0, p1);
+        if (m_displayFrameChanged) return m_displayFrameChanged(p0, p1);
     }
 
     static LambdaSpritePartDelegate* create(

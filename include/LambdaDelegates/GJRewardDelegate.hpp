@@ -11,10 +11,10 @@ public:
     std::function<void()> m_rewardsStatusFailed;
 
     void rewardsStatusFinished(int p0) override {
-        return m_rewardsStatusFinished(p0);
+        if (m_rewardsStatusFinished) return m_rewardsStatusFinished(p0);
     }
     void rewardsStatusFailed() override {
-        return m_rewardsStatusFailed();
+        if (m_rewardsStatusFailed) return m_rewardsStatusFailed();
     }
 
     static LambdaGJRewardDelegate* create(

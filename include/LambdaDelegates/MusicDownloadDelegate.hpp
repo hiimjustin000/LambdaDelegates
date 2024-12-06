@@ -18,31 +18,31 @@ public:
     std::function<void(GJMusicAction)> m_musicActionFailed;
 
     void loadSongInfoFinished(SongInfoObject* p0) override {
-        return m_loadSongInfoFinished(p0);
+        if (m_loadSongInfoFinished) return m_loadSongInfoFinished(p0);
     }
     void loadSongInfoFailed(int p0, GJSongError p1) override {
-        return m_loadSongInfoFailed(p0, p1);
+        if (m_loadSongInfoFailed) return m_loadSongInfoFailed(p0, p1);
     }
     void downloadSongFinished(int p0) override {
-        return m_downloadSongFinished(p0);
+        if (m_downloadSongFinished) return m_downloadSongFinished(p0);
     }
     void downloadSongFailed(int p0, GJSongError p1) override {
-        return m_downloadSongFailed(p0, p1);
+        if (m_downloadSongFailed) return m_downloadSongFailed(p0, p1);
     }
     void songStateChanged() override {
-        return m_songStateChanged();
+        if (m_songStateChanged) return m_songStateChanged();
     }
     void downloadSFXFinished(int p0) override {
-        return m_downloadSFXFinished(p0);
+        if (m_downloadSFXFinished) return m_downloadSFXFinished(p0);
     }
     void downloadSFXFailed(int p0, GJSongError p1) override {
-        return m_downloadSFXFailed(p0, p1);
+        if (m_downloadSFXFailed) return m_downloadSFXFailed(p0, p1);
     }
     void musicActionFinished(GJMusicAction p0) override {
-        return m_musicActionFinished(p0);
+        if (m_musicActionFinished) return m_musicActionFinished(p0);
     }
     void musicActionFailed(GJMusicAction p0) override {
-        return m_musicActionFailed(p0);
+        if (m_musicActionFailed) return m_musicActionFailed(p0);
     }
 
     static LambdaMusicDownloadDelegate* create(

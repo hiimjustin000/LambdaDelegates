@@ -10,7 +10,7 @@ public:
     std::function<void(NumberInputLayer*)> m_numberInputClosed;
 
     void numberInputClosed(NumberInputLayer* p0) override {
-        return m_numberInputClosed(p0);
+        if (m_numberInputClosed) return m_numberInputClosed(p0);
     }
 
     static LambdaNumberInputDelegate* create(

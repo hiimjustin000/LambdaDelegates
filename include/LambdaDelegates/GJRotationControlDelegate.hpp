@@ -12,13 +12,13 @@ public:
     std::function<void()> m_angleChangeEnded;
 
     void angleChanged(float p0) override {
-        return m_angleChanged(p0);
+        if (m_angleChanged) return m_angleChanged(p0);
     }
     void angleChangeBegin() override {
-        return m_angleChangeBegin();
+        if (m_angleChangeBegin) return m_angleChangeBegin();
     }
     void angleChangeEnded() override {
-        return m_angleChangeEnded();
+        if (m_angleChangeEnded) return m_angleChangeEnded();
     }
 
     static LambdaGJRotationControlDelegate* create(

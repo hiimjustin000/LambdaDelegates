@@ -10,7 +10,7 @@ public:
     std::function<void(SetIDPopup*, int)> m_setIDPopupClosed;
 
     void setIDPopupClosed(SetIDPopup* p0, int p1) override {
-        return m_setIDPopupClosed(p0, p1);
+        if (m_setIDPopupClosed) return m_setIDPopupClosed(p0, p1);
     }
 
     static LambdaSetIDPopupDelegate* create(

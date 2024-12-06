@@ -11,10 +11,10 @@ public:
     std::function<void()> m_updateSettingsFailed;
 
     void updateSettingsFinished() override {
-        return m_updateSettingsFinished();
+        if (m_updateSettingsFinished) return m_updateSettingsFinished();
     }
     void updateSettingsFailed() override {
-        return m_updateSettingsFailed();
+        if (m_updateSettingsFailed) return m_updateSettingsFailed();
     }
 
     static LambdaGJAccountSettingsDelegate* create(

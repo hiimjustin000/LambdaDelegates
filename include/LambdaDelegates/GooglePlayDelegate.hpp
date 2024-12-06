@@ -10,7 +10,7 @@ public:
     std::function<void()> m_googlePlaySignedIn;
 
     void googlePlaySignedIn() override {
-        return m_googlePlaySignedIn();
+        if (m_googlePlaySignedIn) return m_googlePlaySignedIn();
     }
 
     static LambdaGooglePlayDelegate* create(

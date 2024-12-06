@@ -13,16 +13,16 @@ public:
     std::function<void(BoomScrollLayer*, int)> m_scrollLayerWillScrollToPage;
 
     void scrollLayerScrollingStarted(BoomScrollLayer* p0) override {
-        return m_scrollLayerScrollingStarted(p0);
+        if (m_scrollLayerScrollingStarted) return m_scrollLayerScrollingStarted(p0);
     }
     void scrollLayerScrolledToPage(BoomScrollLayer* p0, int p1) override {
-        return m_scrollLayerScrolledToPage(p0, p1);
+        if (m_scrollLayerScrolledToPage) return m_scrollLayerScrolledToPage(p0, p1);
     }
     void scrollLayerMoved(cocos2d::CCPoint p0) override {
-        return m_scrollLayerMoved(p0);
+        if (m_scrollLayerMoved) return m_scrollLayerMoved(p0);
     }
     void scrollLayerWillScrollToPage(BoomScrollLayer* p0, int p1) override {
-        return m_scrollLayerWillScrollToPage(p0, p1);
+        if (m_scrollLayerWillScrollToPage) return m_scrollLayerWillScrollToPage(p0, p1);
     }
 
     static LambdaBoomScrollLayerDelegate* create(

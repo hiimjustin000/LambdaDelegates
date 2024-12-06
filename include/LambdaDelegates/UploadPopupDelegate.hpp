@@ -10,7 +10,7 @@ public:
     std::function<void(UploadActionPopup*)> m_onClosePopup;
 
     void onClosePopup(UploadActionPopup* p0) override {
-        return m_onClosePopup(p0);
+        if (m_onClosePopup) return m_onClosePopup(p0);
     }
 
     static LambdaUploadPopupDelegate* create(

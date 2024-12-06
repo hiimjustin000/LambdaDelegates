@@ -10,7 +10,7 @@ public:
     std::function<void(SFXBrowser*)> m_sfxBrowserClosed;
 
     void sfxBrowserClosed(SFXBrowser* p0) override {
-        return m_sfxBrowserClosed(p0);
+        if (m_sfxBrowserClosed) return m_sfxBrowserClosed(p0);
     }
 
     static LambdaSFXBrowserDelegate* create(

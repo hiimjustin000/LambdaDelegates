@@ -10,7 +10,7 @@ public:
     std::function<void()> m_levelSettingsUpdated;
 
     void levelSettingsUpdated() override {
-        return m_levelSettingsUpdated();
+        if (m_levelSettingsUpdated) return m_levelSettingsUpdated();
     }
 
     static LambdaLevelSettingsDelegate* create(

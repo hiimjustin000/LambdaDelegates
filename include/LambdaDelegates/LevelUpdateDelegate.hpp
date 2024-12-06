@@ -11,10 +11,10 @@ public:
     std::function<void(int)> m_levelUpdateFailed;
 
     void levelUpdateFinished(GJGameLevel* p0, UpdateResponse p1) override {
-        return m_levelUpdateFinished(p0, p1);
+        if (m_levelUpdateFinished) return m_levelUpdateFinished(p0, p1);
     }
     void levelUpdateFailed(int p0) override {
-        return m_levelUpdateFailed(p0);
+        if (m_levelUpdateFailed) return m_levelUpdateFailed(p0);
     }
 
     static LambdaLevelUpdateDelegate* create(

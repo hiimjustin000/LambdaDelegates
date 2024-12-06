@@ -10,7 +10,7 @@ public:
     std::function<void(SongInfoObject*)> m_onPlayback;
 
     void onPlayback(SongInfoObject* p0) override {
-        return m_onPlayback(p0);
+        if (m_onPlayback) return m_onPlayback(p0);
     }
 
     static LambdaSongPlaybackDelegate* create(

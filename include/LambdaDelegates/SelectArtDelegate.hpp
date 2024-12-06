@@ -10,7 +10,7 @@ public:
     std::function<void(SelectArtLayer*)> m_selectArtClosed;
 
     void selectArtClosed(SelectArtLayer* p0) override {
-        return m_selectArtClosed(p0);
+        if (m_selectArtClosed) return m_selectArtClosed(p0);
     }
 
     static LambdaSelectArtDelegate* create(

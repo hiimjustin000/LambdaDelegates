@@ -10,7 +10,7 @@ public:
     std::function<void(GJDropDownLayer*)> m_dropDownLayerWillClose;
 
     void dropDownLayerWillClose(GJDropDownLayer* p0) override {
-        return m_dropDownLayerWillClose(p0);
+        if (m_dropDownLayerWillClose) return m_dropDownLayerWillClose(p0);
     }
 
     static LambdaGJDropDownLayerDelegate* create(
