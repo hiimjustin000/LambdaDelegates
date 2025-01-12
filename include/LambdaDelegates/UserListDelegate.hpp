@@ -6,30 +6,30 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaUserListDelegate : public cocos2d::CCObject, public UserListDelegate {
+protected:
+    std::function<void(LambdaUserListDelegate*, cocos2d::CCArray*, UserListType)> m_getUserListFinished;
+    std::function<void(LambdaUserListDelegate*, UserListType, GJErrorCode)> m_getUserListFailed;
+    std::function<void(LambdaUserListDelegate*, cocos2d::CCArray*, UserListType)> m_userListChanged;
+    std::function<void(LambdaUserListDelegate*, UserListType)> m_forceReloadList;
 public:
-    std::function<void(cocos2d::CCArray*, UserListType)> m_getUserListFinished;
-    std::function<void(UserListType, GJErrorCode)> m_getUserListFailed;
-    std::function<void(cocos2d::CCArray*, UserListType)> m_userListChanged;
-    std::function<void(UserListType)> m_forceReloadList;
-
     void getUserListFinished(cocos2d::CCArray* p0, UserListType p1) override {
-        if (m_getUserListFinished) return m_getUserListFinished(p0, p1);
+        if (m_getUserListFinished) return m_getUserListFinished(this, p0, p1);
     }
     void getUserListFailed(UserListType p0, GJErrorCode p1) override {
-        if (m_getUserListFailed) return m_getUserListFailed(p0, p1);
+        if (m_getUserListFailed) return m_getUserListFailed(this, p0, p1);
     }
     void userListChanged(cocos2d::CCArray* p0, UserListType p1) override {
-        if (m_userListChanged) return m_userListChanged(p0, p1);
+        if (m_userListChanged) return m_userListChanged(this, p0, p1);
     }
     void forceReloadList(UserListType p0) override {
-        if (m_forceReloadList) return m_forceReloadList(p0);
+        if (m_forceReloadList) return m_forceReloadList(this, p0);
     }
 
     static LambdaUserListDelegate* create(
-        std::function<void(cocos2d::CCArray*, UserListType)> const& getUserListFinished = [](auto, auto) {},
-        std::function<void(UserListType, GJErrorCode)> const& getUserListFailed = [](auto, auto) {},
-        std::function<void(cocos2d::CCArray*, UserListType)> const& userListChanged = [](auto, auto) {},
-        std::function<void(UserListType)> const& forceReloadList = [](auto) {}
+        std::function<void(LambdaUserListDelegate*, cocos2d::CCArray*, UserListType)> const& getUserListFinished = [](auto*, auto*, auto) {},
+        std::function<void(LambdaUserListDelegate*, UserListType, GJErrorCode)> const& getUserListFailed = [](auto*, auto, auto) {},
+        std::function<void(LambdaUserListDelegate*, cocos2d::CCArray*, UserListType)> const& userListChanged = [](auto*, auto*, auto) {},
+        std::function<void(LambdaUserListDelegate*, UserListType)> const& forceReloadList = [](auto*, auto) {}
     ) {
         auto delegate = new LambdaUserListDelegate();
         delegate->m_getUserListFinished = getUserListFinished;

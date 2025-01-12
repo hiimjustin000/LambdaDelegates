@@ -7,20 +7,20 @@
 #include <Geode/c++stl/gdstdlib.hpp>
 
 class LambdaGJOnlineRewardDelegate : public cocos2d::CCObject, public GJOnlineRewardDelegate {
+protected:
+    std::function<void(LambdaGJOnlineRewardDelegate*, gd::string)> m_onlineRewardStatusFinished;
+    std::function<void(LambdaGJOnlineRewardDelegate*)> m_onlineRewardStatusFailed;
 public:
-    std::function<void(gd::string)> m_onlineRewardStatusFinished;
-    std::function<void()> m_onlineRewardStatusFailed;
-
     void onlineRewardStatusFinished(gd::string p0) override {
-        if (m_onlineRewardStatusFinished) return m_onlineRewardStatusFinished(p0);
+        if (m_onlineRewardStatusFinished) return m_onlineRewardStatusFinished(this, p0);
     }
     void onlineRewardStatusFailed() override {
-        if (m_onlineRewardStatusFailed) return m_onlineRewardStatusFailed();
+        if (m_onlineRewardStatusFailed) return m_onlineRewardStatusFailed(this);
     }
 
     static LambdaGJOnlineRewardDelegate* create(
-        std::function<void(gd::string)> const& onlineRewardStatusFinished = [](auto) {},
-        std::function<void()> const& onlineRewardStatusFailed = []() {}
+        std::function<void(LambdaGJOnlineRewardDelegate*, gd::string)> const& onlineRewardStatusFinished = [](auto*, auto) {},
+        std::function<void(LambdaGJOnlineRewardDelegate*)> const& onlineRewardStatusFailed = [](auto*) {}
     ) {
         auto delegate = new LambdaGJOnlineRewardDelegate();
         delegate->m_onlineRewardStatusFinished = onlineRewardStatusFinished;

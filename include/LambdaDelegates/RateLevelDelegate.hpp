@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaRateLevelDelegate : public cocos2d::CCObject, public RateLevelDelegate {
+protected:
+    std::function<void(LambdaRateLevelDelegate*)> m_rateLevelClosed;
 public:
-    std::function<void()> m_rateLevelClosed;
-
     void rateLevelClosed() override {
-        if (m_rateLevelClosed) return m_rateLevelClosed();
+        if (m_rateLevelClosed) return m_rateLevelClosed(this);
     }
 
     static LambdaRateLevelDelegate* create(
-        std::function<void()> const& rateLevelClosed = []() {}
+        std::function<void(LambdaRateLevelDelegate*)> const& rateLevelClosed = [](auto*) {}
     ) {
         auto delegate = new LambdaRateLevelDelegate();
         delegate->m_rateLevelClosed = rateLevelClosed;

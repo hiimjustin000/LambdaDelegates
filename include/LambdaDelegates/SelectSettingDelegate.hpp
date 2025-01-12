@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaSelectSettingDelegate : public cocos2d::CCObject, public SelectSettingDelegate {
+protected:
+    std::function<void(LambdaSelectSettingDelegate*, SelectSettingLayer*)> m_selectSettingClosed;
 public:
-    std::function<void(SelectSettingLayer*)> m_selectSettingClosed;
-
     void selectSettingClosed(SelectSettingLayer* p0) override {
-        if (m_selectSettingClosed) return m_selectSettingClosed(p0);
+        if (m_selectSettingClosed) return m_selectSettingClosed(this, p0);
     }
 
     static LambdaSelectSettingDelegate* create(
-        std::function<void(SelectSettingLayer*)> const& selectSettingClosed = [](auto) {}
+        std::function<void(LambdaSelectSettingDelegate*, SelectSettingLayer*)> const& selectSettingClosed = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaSelectSettingDelegate();
         delegate->m_selectSettingClosed = selectSettingClosed;

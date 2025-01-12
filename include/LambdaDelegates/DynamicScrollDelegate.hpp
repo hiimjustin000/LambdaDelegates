@@ -6,16 +6,16 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaDynamicScrollDelegate : public cocos2d::CCObject, public DynamicScrollDelegate {
+protected:
+    std::function<void(LambdaDynamicScrollDelegate*, cocos2d::CCObject*, cocos2d::CCObject*)> m_updatePageWithObject;
 public:
-    std::function<void(cocos2d::CCObject*, cocos2d::CCObject*)> m_updatePageWithObject;
-
     void updatePageWithObject(cocos2d::CCObject* p0, cocos2d::CCObject* p1) override {
-        if (m_updatePageWithObject) return m_updatePageWithObject(p0, p1);
+        if (m_updatePageWithObject) return m_updatePageWithObject(this, p0, p1);
         throw std::runtime_error("Lambda Delegates: DynamicScrollDelegate::updatePageWithObject not implemented");
     }
 
     static LambdaDynamicScrollDelegate* create(
-        std::function<void(cocos2d::CCObject*, cocos2d::CCObject*)> const& updatePageWithObject
+        std::function<void(LambdaDynamicScrollDelegate*, cocos2d::CCObject*, cocos2d::CCObject*)> const& updatePageWithObject = nullptr
     ) {
         auto delegate = new LambdaDynamicScrollDelegate();
         delegate->m_updatePageWithObject = updatePageWithObject;

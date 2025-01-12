@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaSelectListIconDelegate : public cocos2d::CCObject, public SelectListIconDelegate {
+protected:
+    std::function<void(LambdaSelectListIconDelegate*, SelectListIconLayer*)> m_iconSelectClosed;
 public:
-    std::function<void(SelectListIconLayer*)> m_iconSelectClosed;
-
     void iconSelectClosed(SelectListIconLayer* p0) override {
-        if (m_iconSelectClosed) return m_iconSelectClosed(p0);
+        if (m_iconSelectClosed) return m_iconSelectClosed(this, p0);
     }
 
     static LambdaSelectListIconDelegate* create(
-        std::function<void(SelectListIconLayer*)> const& iconSelectClosed = [](auto) {}
+        std::function<void(LambdaSelectListIconDelegate*, SelectListIconLayer*)> const& iconSelectClosed = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaSelectListIconDelegate();
         delegate->m_iconSelectClosed = iconSelectClosed;

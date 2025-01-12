@@ -6,46 +6,46 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaTextInputDelegate : public cocos2d::CCObject, public TextInputDelegate {
+protected:
+    std::function<void(LambdaTextInputDelegate*, CCTextInputNode*)> m_textChanged;
+    std::function<void(LambdaTextInputDelegate*, CCTextInputNode*)> m_textInputOpened;
+    std::function<void(LambdaTextInputDelegate*, CCTextInputNode*)> m_textInputClosed;
+    std::function<void(LambdaTextInputDelegate*, CCTextInputNode*, float)> m_textInputShouldOffset;
+    std::function<void(LambdaTextInputDelegate*, CCTextInputNode*)> m_textInputReturn;
+    std::function<bool(LambdaTextInputDelegate*, CCTextInputNode*)> m_allowTextInput;
+    std::function<void(LambdaTextInputDelegate*, CCTextInputNode*)> m_enterPressed;
 public:
-    std::function<void(CCTextInputNode*)> m_textChanged;
-    std::function<void(CCTextInputNode*)> m_textInputOpened;
-    std::function<void(CCTextInputNode*)> m_textInputClosed;
-    std::function<void(CCTextInputNode*, float)> m_textInputShouldOffset;
-    std::function<void(CCTextInputNode*)> m_textInputReturn;
-    std::function<bool(CCTextInputNode*)> m_allowTextInput;
-    std::function<void(CCTextInputNode*)> m_enterPressed;
-
     void textChanged(CCTextInputNode* p0) override {
-        if (m_textChanged) return m_textChanged(p0);
+        if (m_textChanged) return m_textChanged(this, p0);
     }
     void textInputOpened(CCTextInputNode* p0) override {
-        if (m_textInputOpened) return m_textInputOpened(p0);
+        if (m_textInputOpened) return m_textInputOpened(this, p0);
     }
     void textInputClosed(CCTextInputNode* p0) override {
-        if (m_textInputClosed) return m_textInputClosed(p0);
+        if (m_textInputClosed) return m_textInputClosed(this, p0);
     }
     void textInputShouldOffset(CCTextInputNode* p0, float p1) override {
-        if (m_textInputShouldOffset) return m_textInputShouldOffset(p0, p1);
+        if (m_textInputShouldOffset) return m_textInputShouldOffset(this, p0, p1);
     }
     void textInputReturn(CCTextInputNode* p0) override {
-        if (m_textInputReturn) return m_textInputReturn(p0);
+        if (m_textInputReturn) return m_textInputReturn(this, p0);
     }
     bool allowTextInput(CCTextInputNode* p0) override {
-        if (m_allowTextInput) return m_allowTextInput(p0);
+        if (m_allowTextInput) return m_allowTextInput(this, p0);
         return true;
     }
     void enterPressed(CCTextInputNode* p0) override {
-        if (m_enterPressed) return m_enterPressed(p0);
+        if (m_enterPressed) return m_enterPressed(this, p0);
     }
 
     static LambdaTextInputDelegate* create(
-        std::function<void(CCTextInputNode*)> const& textChanged = [](auto) {},
-        std::function<void(CCTextInputNode*)> const& textInputOpened = [](auto) {},
-        std::function<void(CCTextInputNode*)> const& textInputClosed = [](auto) {},
-        std::function<void(CCTextInputNode*, float)> const& textInputShouldOffset = [](auto, auto) {},
-        std::function<void(CCTextInputNode*)> const& textInputReturn = [](auto) {},
-        std::function<bool(CCTextInputNode*)> const& allowTextInput = [](auto) { return true; },
-        std::function<void(CCTextInputNode*)> const& enterPressed = [](auto) {}
+        std::function<void(LambdaTextInputDelegate*, CCTextInputNode*)> const& textChanged = [](auto*, auto*) {},
+        std::function<void(LambdaTextInputDelegate*, CCTextInputNode*)> const& textInputOpened = [](auto*, auto*) {},
+        std::function<void(LambdaTextInputDelegate*, CCTextInputNode*)> const& textInputClosed = [](auto*, auto*) {},
+        std::function<void(LambdaTextInputDelegate*, CCTextInputNode*, float)> const& textInputShouldOffset = [](auto*, auto*, auto) {},
+        std::function<void(LambdaTextInputDelegate*, CCTextInputNode*)> const& textInputReturn = [](auto*, auto*) {},
+        std::function<bool(LambdaTextInputDelegate*, CCTextInputNode*)> const& allowTextInput = [](auto*, auto*) { return true; },
+        std::function<void(LambdaTextInputDelegate*, CCTextInputNode*)> const& enterPressed = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaTextInputDelegate();
         delegate->m_textChanged = textChanged;

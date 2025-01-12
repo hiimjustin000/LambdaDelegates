@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGJAccountDelegate : public cocos2d::CCObject, public GJAccountDelegate {
+protected:
+    std::function<void(LambdaGJAccountDelegate*)> m_accountStatusChanged;
 public:
-    std::function<void()> m_accountStatusChanged;
-
     void accountStatusChanged() override {
-        if (m_accountStatusChanged) return m_accountStatusChanged();
+        if (m_accountStatusChanged) return m_accountStatusChanged(this);
     }
 
     static LambdaGJAccountDelegate* create(
-        std::function<void()> const& accountStatusChanged = []() {}
+        std::function<void(LambdaGJAccountDelegate*)> const& accountStatusChanged = [](auto*) {}
     ) {
         auto delegate = new LambdaGJAccountDelegate();
         delegate->m_accountStatusChanged = accountStatusChanged;

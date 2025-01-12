@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaCCCircleWaveDelegate : public cocos2d::CCObject, public CCCircleWaveDelegate {
+protected:
+    std::function<void(LambdaCCCircleWaveDelegate*, CCCircleWave*)> m_circleWaveWillBeRemoved;
 public:
-    std::function<void(CCCircleWave*)> m_circleWaveWillBeRemoved;
-
     void circleWaveWillBeRemoved(CCCircleWave* p0) override {
-        if (m_circleWaveWillBeRemoved) return m_circleWaveWillBeRemoved(p0);
+        if (m_circleWaveWillBeRemoved) return m_circleWaveWillBeRemoved(this, p0);
     }
 
     static LambdaCCCircleWaveDelegate* create(
-        std::function<void(CCCircleWave*)> const& circleWaveWillBeRemoved = [](auto) {}
+        std::function<void(LambdaCCCircleWaveDelegate*, CCCircleWave*)> const& circleWaveWillBeRemoved = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaCCCircleWaveDelegate();
         delegate->m_circleWaveWillBeRemoved = circleWaveWillBeRemoved;

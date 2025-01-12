@@ -18,9 +18,9 @@ class $modify(MyMenuLayer, MenuLayer) {
         MenuLayer::onMoreGames(sender);
 
         auto f = m_fields.self();
-        f->m_levelDownloadDelegate = LambdaLevelDownloadDelegate::create([](GJGameLevel* p0) {
+        f->m_levelDownloadDelegate = LambdaLevelDownloadDelegate::create([](LambdaLevelDownloadDelegate* delegate, GJGameLevel* p0) {
             FLAlertLayer::create("Success", fmt::format("Level {} downloaded successfully!", format_as(p0)).c_str(), "OK")->show();
-        }, [](int p0) {
+        }, [](LambdaLevelDownloadDelegate* delegate, int p0) {
             FLAlertLayer::create("Error", fmt::format("Failed to download level: {}", p0).c_str(), "OK")->show();
         });
         f->m_levelDownloadDelegate->retain();

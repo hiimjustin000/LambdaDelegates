@@ -6,21 +6,21 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaRewardedVideoDelegate : public cocos2d::CCObject, public RewardedVideoDelegate {
+protected:
+    std::function<void(LambdaRewardedVideoDelegate*)> m_rewardedVideoFinished;
+    std::function<bool(LambdaRewardedVideoDelegate*)> m_shouldOffsetRewardCurrency;
 public:
-    std::function<void()> m_rewardedVideoFinished;
-    std::function<bool()> m_shouldOffsetRewardCurrency;
-
     void rewardedVideoFinished() override {
-        if (m_rewardedVideoFinished) return m_rewardedVideoFinished();
+        if (m_rewardedVideoFinished) return m_rewardedVideoFinished(this);
     }
     bool shouldOffsetRewardCurrency() override {
-        if (m_shouldOffsetRewardCurrency) return m_shouldOffsetRewardCurrency();
+        if (m_shouldOffsetRewardCurrency) return m_shouldOffsetRewardCurrency(this);
         return false;
     }
 
     static LambdaRewardedVideoDelegate* create(
-        std::function<void()> const& rewardedVideoFinished = []() {},
-        std::function<bool()> const& shouldOffsetRewardCurrency = []() { return false; }
+        std::function<void(LambdaRewardedVideoDelegate*)> const& rewardedVideoFinished = [](auto*) {},
+        std::function<bool(LambdaRewardedVideoDelegate*)> const& shouldOffsetRewardCurrency = [](auto*) { return false; }
     ) {
         auto delegate = new LambdaRewardedVideoDelegate();
         delegate->m_rewardedVideoFinished = rewardedVideoFinished;

@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaSetIDPopupDelegate : public cocos2d::CCObject, public SetIDPopupDelegate {
+protected:
+    std::function<void(LambdaSetIDPopupDelegate*, SetIDPopup*, int)> m_setIDPopupClosed;
 public:
-    std::function<void(SetIDPopup*, int)> m_setIDPopupClosed;
-
     void setIDPopupClosed(SetIDPopup* p0, int p1) override {
-        if (m_setIDPopupClosed) return m_setIDPopupClosed(p0, p1);
+        if (m_setIDPopupClosed) return m_setIDPopupClosed(this, p0, p1);
     }
 
     static LambdaSetIDPopupDelegate* create(
-        std::function<void(SetIDPopup*, int)> const& setIDPopupClosed = [](auto, auto) {}
+        std::function<void(LambdaSetIDPopupDelegate*, SetIDPopup*, int)> const& setIDPopupClosed = [](auto*, auto*, auto) {}
     ) {
         auto delegate = new LambdaSetIDPopupDelegate();
         delegate->m_setIDPopupClosed = setIDPopupClosed;

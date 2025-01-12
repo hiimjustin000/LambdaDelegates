@@ -7,30 +7,30 @@
 #include <Geode/c++stl/gdstdlib.hpp>
 
 class LambdaMessageListDelegate : public cocos2d::CCObject, public MessageListDelegate {
+protected:
+    std::function<void(LambdaMessageListDelegate*, cocos2d::CCArray*, char const*)> m_loadMessagesFinished;
+    std::function<void(LambdaMessageListDelegate*, char const*, GJErrorCode)> m_loadMessagesFailed;
+    std::function<void(LambdaMessageListDelegate*, bool)> m_forceReloadMessages;
+    std::function<void(LambdaMessageListDelegate*, gd::string, char const*)> m_setupPageInfo;
 public:
-    std::function<void(cocos2d::CCArray*, char const*)> m_loadMessagesFinished;
-    std::function<void(char const*, GJErrorCode)> m_loadMessagesFailed;
-    std::function<void(bool)> m_forceReloadMessages;
-    std::function<void(gd::string, char const*)> m_setupPageInfo;
-
     void loadMessagesFinished(cocos2d::CCArray* p0, char const* p1) override {
-        if (m_loadMessagesFinished) return m_loadMessagesFinished(p0, p1);
+        if (m_loadMessagesFinished) return m_loadMessagesFinished(this, p0, p1);
     }
     void loadMessagesFailed(char const* p0, GJErrorCode p1) override {
-        if (m_loadMessagesFailed) return m_loadMessagesFailed(p0, p1);
+        if (m_loadMessagesFailed) return m_loadMessagesFailed(this, p0, p1);
     }
     void forceReloadMessages(bool p0) override {
-        if (m_forceReloadMessages) return m_forceReloadMessages(p0);
+        if (m_forceReloadMessages) return m_forceReloadMessages(this, p0);
     }
     void setupPageInfo(gd::string p0, char const* p1) override {
-        if (m_setupPageInfo) return m_setupPageInfo(p0, p1);
+        if (m_setupPageInfo) return m_setupPageInfo(this, p0, p1);
     }
 
     static LambdaMessageListDelegate* create(
-        std::function<void(cocos2d::CCArray*, char const*)> const& loadMessagesFinished = [](auto, auto) {},
-        std::function<void(char const*, GJErrorCode)> const& loadMessagesFailed = [](auto, auto) {},
-        std::function<void(bool)> const& forceReloadMessages = [](auto) {},
-        std::function<void(gd::string, char const*)> const& setupPageInfo = [](auto, auto) {}
+        std::function<void(LambdaMessageListDelegate*, cocos2d::CCArray*, char const*)> const& loadMessagesFinished = [](auto*, auto*, auto const*) {},
+        std::function<void(LambdaMessageListDelegate*, char const*, GJErrorCode)> const& loadMessagesFailed = [](auto*, auto const*, auto) {},
+        std::function<void(LambdaMessageListDelegate*, bool)> const& forceReloadMessages = [](auto*, auto) {},
+        std::function<void(LambdaMessageListDelegate*, gd::string, char const*)> const& setupPageInfo = [](auto*, auto, auto const*) {}
     ) {
         auto delegate = new LambdaMessageListDelegate();
         delegate->m_loadMessagesFinished = loadMessagesFinished;

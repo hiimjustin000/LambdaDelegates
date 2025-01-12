@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGameRateDelegate : public cocos2d::CCObject, public GameRateDelegate {
+protected:
+    std::function<void(LambdaGameRateDelegate*)> m_updateRate;
 public:
-    std::function<void()> m_updateRate;
-
     void updateRate() override {
-        if (m_updateRate) return m_updateRate();
+        if (m_updateRate) return m_updateRate(this);
     }
 
     static LambdaGameRateDelegate* create(
-        std::function<void()> const& updateRate = []() {}
+        std::function<void(LambdaGameRateDelegate*)> const& updateRate = [](auto*) {}
     ) {
         auto delegate = new LambdaGameRateDelegate();
         delegate->m_updateRate = updateRate;

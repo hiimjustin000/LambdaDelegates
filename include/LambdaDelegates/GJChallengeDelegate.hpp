@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGJChallengeDelegate : public cocos2d::CCObject, public GJChallengeDelegate {
+protected:
+    std::function<void(LambdaGJChallengeDelegate*)> m_challengeStatusFinished;
+    std::function<void(LambdaGJChallengeDelegate*)> m_challengeStatusFailed;
 public:
-    std::function<void()> m_challengeStatusFinished;
-    std::function<void()> m_challengeStatusFailed;
-
     void challengeStatusFinished() override {
-        if (m_challengeStatusFinished) return m_challengeStatusFinished();
+        if (m_challengeStatusFinished) return m_challengeStatusFinished(this);
     }
     void challengeStatusFailed() override {
-        if (m_challengeStatusFailed) return m_challengeStatusFailed();
+        if (m_challengeStatusFailed) return m_challengeStatusFailed(this);
     }
 
     static LambdaGJChallengeDelegate* create(
-        std::function<void()> const& challengeStatusFinished = []() {},
-        std::function<void()> const& challengeStatusFailed = []() {}
+        std::function<void(LambdaGJChallengeDelegate*)> const& challengeStatusFinished = [](auto*) {},
+        std::function<void(LambdaGJChallengeDelegate*)> const& challengeStatusFailed = [](auto*) {}
     ) {
         auto delegate = new LambdaGJChallengeDelegate();
         delegate->m_challengeStatusFinished = challengeStatusFinished;

@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaCharacterColorDelegate : public cocos2d::CCObject, public CharacterColorDelegate {
+protected:
+    std::function<void(LambdaCharacterColorDelegate*)> m_playerColorChanged;
+    std::function<void(LambdaCharacterColorDelegate*, int, UnlockType)> m_showUnlockPopup;
 public:
-    std::function<void()> m_playerColorChanged;
-    std::function<void(int, UnlockType)> m_showUnlockPopup;
-
     void playerColorChanged() override {
-        if (m_playerColorChanged) return m_playerColorChanged();
+        if (m_playerColorChanged) return m_playerColorChanged(this);
     }
     void showUnlockPopup(int p0, UnlockType p1) override {
-        if (m_showUnlockPopup) return m_showUnlockPopup(p0, p1);
+        if (m_showUnlockPopup) return m_showUnlockPopup(this, p0, p1);
     }
 
     static LambdaCharacterColorDelegate* create(
-        std::function<void()> const& playerColorChanged = []() {},
-        std::function<void(int, UnlockType)> const& showUnlockPopup = [](auto, auto) {}
+        std::function<void(LambdaCharacterColorDelegate*)> const& playerColorChanged = [](auto*) {},
+        std::function<void(LambdaCharacterColorDelegate*, int, UnlockType)> const& showUnlockPopup = [](auto*, auto, auto) {}
     ) {
         auto delegate = new LambdaCharacterColorDelegate();
         delegate->m_playerColorChanged = playerColorChanged;

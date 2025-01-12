@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaLevelDownloadDelegate : public cocos2d::CCObject, public LevelDownloadDelegate {
+protected:
+    std::function<void(LambdaLevelDownloadDelegate*, GJGameLevel*)> m_levelDownloadFinished;
+    std::function<void(LambdaLevelDownloadDelegate*, int)> m_levelDownloadFailed;
 public:
-    std::function<void(GJGameLevel*)> m_levelDownloadFinished;
-    std::function<void(int)> m_levelDownloadFailed;
-
     void levelDownloadFinished(GJGameLevel* p0) override {
-        if (m_levelDownloadFinished) return m_levelDownloadFinished(p0);
+        if (m_levelDownloadFinished) return m_levelDownloadFinished(this, p0);
     }
     void levelDownloadFailed(int p0) override {
-        if (m_levelDownloadFailed) return m_levelDownloadFailed(p0);
+        if (m_levelDownloadFailed) return m_levelDownloadFailed(this, p0);
     }
 
     static LambdaLevelDownloadDelegate* create(
-        std::function<void(GJGameLevel*)> const& levelDownloadFinished = [](auto) {},
-        std::function<void(int)> const& levelDownloadFailed = [](auto) {}
+        std::function<void(LambdaLevelDownloadDelegate*, GJGameLevel*)> const& levelDownloadFinished = [](auto*, auto*) {},
+        std::function<void(LambdaLevelDownloadDelegate*, int)> const& levelDownloadFailed = [](auto*, auto) {}
     ) {
         auto delegate = new LambdaLevelDownloadDelegate();
         delegate->m_levelDownloadFinished = levelDownloadFinished;

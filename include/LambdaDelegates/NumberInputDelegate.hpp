@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaNumberInputDelegate : public cocos2d::CCObject, public NumberInputDelegate {
+protected:
+    std::function<void(LambdaNumberInputDelegate*, NumberInputLayer*)> m_numberInputClosed;
 public:
-    std::function<void(NumberInputLayer*)> m_numberInputClosed;
-
     void numberInputClosed(NumberInputLayer* p0) override {
-        if (m_numberInputClosed) return m_numberInputClosed(p0);
+        if (m_numberInputClosed) return m_numberInputClosed(this, p0);
     }
 
     static LambdaNumberInputDelegate* create(
-        std::function<void(NumberInputLayer*)> const& numberInputClosed = [](auto) {}
+        std::function<void(LambdaNumberInputDelegate*, NumberInputLayer*)> const& numberInputClosed = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaNumberInputDelegate();
         delegate->m_numberInputClosed = numberInputClosed;

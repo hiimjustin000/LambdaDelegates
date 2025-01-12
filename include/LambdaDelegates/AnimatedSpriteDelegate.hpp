@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaAnimatedSpriteDelegate : public cocos2d::CCObject, public AnimatedSpriteDelegate {
+protected:
+    std::function<void(LambdaAnimatedSpriteDelegate*, char const*)> m_animationFinished;
 public:
-    std::function<void(char const*)> m_animationFinished;
-
     void animationFinished(char const* p0) override {
-        if (m_animationFinished) return m_animationFinished(p0);
+        if (m_animationFinished) return m_animationFinished(this, p0);
     }
 
     static LambdaAnimatedSpriteDelegate* create(
-        std::function<void(char const*)> const& animationFinished = [](auto) {}
+        std::function<void(LambdaAnimatedSpriteDelegate*, char const*)> const& animationFinished = [](auto*, auto const*) {}
     ) {
         auto delegate = new LambdaAnimatedSpriteDelegate();
         delegate->m_animationFinished = animationFinished;

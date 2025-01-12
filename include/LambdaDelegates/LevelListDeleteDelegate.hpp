@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaLevelListDeleteDelegate : public cocos2d::CCObject, public LevelListDeleteDelegate {
+protected:
+    std::function<void(LambdaLevelListDeleteDelegate*, int)> m_levelListDeleteFinished;
+    std::function<void(LambdaLevelListDeleteDelegate*, int)> m_levelListDeleteFailed;
 public:
-    std::function<void(int)> m_levelListDeleteFinished;
-    std::function<void(int)> m_levelListDeleteFailed;
-
     void levelListDeleteFinished(int p0) override {
-        if (m_levelListDeleteFinished) return m_levelListDeleteFinished(p0);
+        if (m_levelListDeleteFinished) return m_levelListDeleteFinished(this, p0);
     }
     void levelListDeleteFailed(int p0) override {
-        if (m_levelListDeleteFailed) return m_levelListDeleteFailed(p0);
+        if (m_levelListDeleteFailed) return m_levelListDeleteFailed(this, p0);
     }
 
     static LambdaLevelListDeleteDelegate* create(
-        std::function<void(int)> const& levelListDeleteFinished = [](auto) {},
-        std::function<void(int)> const& levelListDeleteFailed = [](auto) {}
+        std::function<void(LambdaLevelListDeleteDelegate*, int)> const& levelListDeleteFinished = [](auto*, auto) {},
+        std::function<void(LambdaLevelListDeleteDelegate*, int)> const& levelListDeleteFailed = [](auto*, auto) {}
     ) {
         auto delegate = new LambdaLevelListDeleteDelegate();
         delegate->m_levelListDeleteFinished = levelListDeleteFinished;

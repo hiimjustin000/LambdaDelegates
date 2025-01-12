@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaSelectPremadeDelegate : public cocos2d::CCObject, public SelectPremadeDelegate {
+protected:
+    std::function<void(LambdaSelectPremadeDelegate*, SelectPremadeLayer*, int)> m_selectPremadeClosed;
 public:
-    std::function<void(SelectPremadeLayer*, int)> m_selectPremadeClosed;
-
     void selectPremadeClosed(SelectPremadeLayer* p0, int p1) override {
-        if (m_selectPremadeClosed) return m_selectPremadeClosed(p0, p1);
+        if (m_selectPremadeClosed) return m_selectPremadeClosed(this, p0, p1);
     }
 
     static LambdaSelectPremadeDelegate* create(
-        std::function<void(SelectPremadeLayer*, int)> const& selectPremadeClosed = [](auto, auto) {}
+        std::function<void(LambdaSelectPremadeDelegate*, SelectPremadeLayer*, int)> const& selectPremadeClosed = [](auto*, auto*, auto) {}
     ) {
         auto delegate = new LambdaSelectPremadeDelegate();
         delegate->m_selectPremadeClosed = selectPremadeClosed;

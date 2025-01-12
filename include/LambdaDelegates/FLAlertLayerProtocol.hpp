@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaFLAlertLayerProtocol : public cocos2d::CCObject, public FLAlertLayerProtocol {
+protected:
+    std::function<void(LambdaFLAlertLayerProtocol*, FLAlertLayer*, bool)> m_FLAlert_Clicked;
 public:
-    std::function<void(FLAlertLayer*, bool)> m_FLAlert_Clicked;
-
     void FLAlert_Clicked(FLAlertLayer* p0, bool p1) override {
-        if (m_FLAlert_Clicked) return m_FLAlert_Clicked(p0, p1);
+        if (m_FLAlert_Clicked) return m_FLAlert_Clicked(this, p0, p1);
     }
 
     static LambdaFLAlertLayerProtocol* create(
-        std::function<void(FLAlertLayer*, bool)> const& FLAlert_Clicked = [](auto, auto) {}
+        std::function<void(LambdaFLAlertLayerProtocol*, FLAlertLayer*, bool)> const& FLAlert_Clicked = [](auto*, auto*, auto) {}
     ) {
         auto delegate = new LambdaFLAlertLayerProtocol();
         delegate->m_FLAlert_Clicked = FLAlert_Clicked;

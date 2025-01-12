@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaLevelUploadDelegate : public cocos2d::CCObject, public LevelUploadDelegate {
+protected:
+    std::function<void(LambdaLevelUploadDelegate*, GJGameLevel*)> m_levelUploadFinished;
+    std::function<void(LambdaLevelUploadDelegate*, GJGameLevel*)> m_levelUploadFailed;
 public:
-    std::function<void(GJGameLevel*)> m_levelUploadFinished;
-    std::function<void(GJGameLevel*)> m_levelUploadFailed;
-
     void levelUploadFinished(GJGameLevel* p0) override {
-        if (m_levelUploadFinished) return m_levelUploadFinished(p0);
+        if (m_levelUploadFinished) return m_levelUploadFinished(this, p0);
     }
     void levelUploadFailed(GJGameLevel* p0) override {
-        if (m_levelUploadFailed) return m_levelUploadFailed(p0);
+        if (m_levelUploadFailed) return m_levelUploadFailed(this, p0);
     }
 
     static LambdaLevelUploadDelegate* create(
-        std::function<void(GJGameLevel*)> const& levelUploadFinished = [](auto) {},
-        std::function<void(GJGameLevel*)> const& levelUploadFailed = [](auto) {}
+        std::function<void(LambdaLevelUploadDelegate*, GJGameLevel*)> const& levelUploadFinished = [](auto*, auto*) {},
+        std::function<void(LambdaLevelUploadDelegate*, GJGameLevel*)> const& levelUploadFailed = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaLevelUploadDelegate();
         delegate->m_levelUploadFinished = levelUploadFinished;

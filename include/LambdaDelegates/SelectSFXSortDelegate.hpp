@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaSelectSFXSortDelegate : public cocos2d::CCObject, public SelectSFXSortDelegate {
+protected:
+    std::function<void(LambdaSelectSFXSortDelegate*, SelectSFXSortLayer*)> m_sortSelectClosed;
 public:
-    std::function<void(SelectSFXSortLayer*)> m_sortSelectClosed;
-
     void sortSelectClosed(SelectSFXSortLayer* p0) override {
-        if (m_sortSelectClosed) return m_sortSelectClosed(p0);
+        if (m_sortSelectClosed) return m_sortSelectClosed(this, p0);
     }
 
     static LambdaSelectSFXSortDelegate* create(
-        std::function<void(SelectSFXSortLayer*)> const& sortSelectClosed = [](auto) {}
+        std::function<void(LambdaSelectSFXSortDelegate*, SelectSFXSortLayer*)> const& sortSelectClosed = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaSelectSFXSortDelegate();
         delegate->m_sortSelectClosed = sortSelectClosed;

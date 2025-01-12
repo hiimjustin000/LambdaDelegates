@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaSFXBrowserDelegate : public cocos2d::CCObject, public SFXBrowserDelegate {
+protected:
+    std::function<void(LambdaSFXBrowserDelegate*, SFXBrowser*)> m_sfxBrowserClosed;
 public:
-    std::function<void(SFXBrowser*)> m_sfxBrowserClosed;
-
     void sfxBrowserClosed(SFXBrowser* p0) override {
-        if (m_sfxBrowserClosed) return m_sfxBrowserClosed(p0);
+        if (m_sfxBrowserClosed) return m_sfxBrowserClosed(this, p0);
     }
 
     static LambdaSFXBrowserDelegate* create(
-        std::function<void(SFXBrowser*)> const& sfxBrowserClosed = [](auto) {}
+        std::function<void(LambdaSFXBrowserDelegate*, SFXBrowser*)> const& sfxBrowserClosed = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaSFXBrowserDelegate();
         delegate->m_sfxBrowserClosed = sfxBrowserClosed;

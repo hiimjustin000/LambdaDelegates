@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaOptionsObjectDelegate : public cocos2d::CCObject, public OptionsObjectDelegate {
+protected:
+    std::function<void(LambdaOptionsObjectDelegate*, OptionsObject*)> m_stateChanged;
 public:
-    std::function<void(OptionsObject*)> m_stateChanged;
-
     void stateChanged(OptionsObject* p0) override {
-        if (m_stateChanged) return m_stateChanged(p0);
+        if (m_stateChanged) return m_stateChanged(this, p0);
     }
 
     static LambdaOptionsObjectDelegate* create(
-        std::function<void(OptionsObject*)> const& stateChanged = [](auto) {}
+        std::function<void(LambdaOptionsObjectDelegate*, OptionsObject*)> const& stateChanged = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaOptionsObjectDelegate();
         delegate->m_stateChanged = stateChanged;

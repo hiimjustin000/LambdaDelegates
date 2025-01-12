@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaTextAreaDelegate : public cocos2d::CCObject, public TextAreaDelegate {
+protected:
+    std::function<void(LambdaTextAreaDelegate*, TextArea*)> m_fadeInTextFinished;
 public:
-    std::function<void(TextArea*)> m_fadeInTextFinished;
-
     void fadeInTextFinished(TextArea* p0) override {
-        if (m_fadeInTextFinished) return m_fadeInTextFinished(p0);
+        if (m_fadeInTextFinished) return m_fadeInTextFinished(this, p0);
     }
 
     static LambdaTextAreaDelegate* create(
-        std::function<void(TextArea*)> const& fadeInTextFinished = [](auto) {}
+        std::function<void(LambdaTextAreaDelegate*, TextArea*)> const& fadeInTextFinished = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaTextAreaDelegate();
         delegate->m_fadeInTextFinished = fadeInTextFinished;

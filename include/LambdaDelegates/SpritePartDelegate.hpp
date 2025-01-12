@@ -7,15 +7,15 @@
 #include <Geode/c++stl/gdstdlib.hpp>
 
 class LambdaSpritePartDelegate : public cocos2d::CCObject, public SpritePartDelegate {
+protected:
+    std::function<void(LambdaSpritePartDelegate*, cocos2d::CCObject*, gd::string)> m_displayFrameChanged;
 public:
-    std::function<void(cocos2d::CCObject*, gd::string)> m_displayFrameChanged;
-
     void displayFrameChanged(cocos2d::CCObject* p0, gd::string p1) override {
-        if (m_displayFrameChanged) return m_displayFrameChanged(p0, p1);
+        if (m_displayFrameChanged) return m_displayFrameChanged(this, p0, p1);
     }
 
     static LambdaSpritePartDelegate* create(
-        std::function<void(cocos2d::CCObject*, gd::string)> const& displayFrameChanged = [](auto, auto) {}
+        std::function<void(LambdaSpritePartDelegate*, cocos2d::CCObject*, gd::string)> const& displayFrameChanged = [](auto*, auto*, auto) {}
     ) {
         auto delegate = new LambdaSpritePartDelegate();
         delegate->m_displayFrameChanged = displayFrameChanged;

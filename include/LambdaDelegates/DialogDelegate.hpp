@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaDialogDelegate : public cocos2d::CCObject, public DialogDelegate {
+protected:
+    std::function<void(LambdaDialogDelegate*, DialogLayer*)> m_dialogClosed;
 public:
-    std::function<void(DialogLayer*)> m_dialogClosed;
-
     void dialogClosed(DialogLayer* p0) override {
-        if (m_dialogClosed) return m_dialogClosed(p0);
+        if (m_dialogClosed) return m_dialogClosed(this, p0);
     }
 
     static LambdaDialogDelegate* create(
-        std::function<void(DialogLayer*)> const& dialogClosed = [](auto) {}
+        std::function<void(LambdaDialogDelegate*, DialogLayer*)> const& dialogClosed = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaDialogDelegate();
         delegate->m_dialogClosed = dialogClosed;

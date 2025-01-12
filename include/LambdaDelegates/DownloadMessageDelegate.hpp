@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaDownloadMessageDelegate : public cocos2d::CCObject, public DownloadMessageDelegate {
+protected:
+    std::function<void(LambdaDownloadMessageDelegate*, GJUserMessage*)> m_downloadMessageFinished;
+    std::function<void(LambdaDownloadMessageDelegate*, int)> m_downloadMessageFailed;
 public:
-    std::function<void(GJUserMessage*)> m_downloadMessageFinished;
-    std::function<void(int)> m_downloadMessageFailed;
-
     void downloadMessageFinished(GJUserMessage* p0) override {
-        if (m_downloadMessageFinished) return m_downloadMessageFinished(p0);
+        if (m_downloadMessageFinished) return m_downloadMessageFinished(this, p0);
     }
     void downloadMessageFailed(int p0) override {
-        if (m_downloadMessageFailed) return m_downloadMessageFailed(p0);
+        if (m_downloadMessageFailed) return m_downloadMessageFailed(this, p0);
     }
 
     static LambdaDownloadMessageDelegate* create(
-        std::function<void(GJUserMessage*)> const& downloadMessageFinished = [](auto) {},
-        std::function<void(int)> const& downloadMessageFailed = [](auto) {}
+        std::function<void(LambdaDownloadMessageDelegate*, GJUserMessage*)> const& downloadMessageFinished = [](auto*, auto*) {},
+        std::function<void(LambdaDownloadMessageDelegate*, int)> const& downloadMessageFailed = [](auto*, auto) {}
     ) {
         auto delegate = new LambdaDownloadMessageDelegate();
         delegate->m_downloadMessageFinished = downloadMessageFinished;

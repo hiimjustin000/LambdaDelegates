@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaListButtonBarDelegate : public cocos2d::CCObject, public ListButtonBarDelegate {
+protected:
+    std::function<void(LambdaListButtonBarDelegate*, ListButtonBar*, int)> m_listButtonBarSwitchedPage;
 public:
-    std::function<void(ListButtonBar*, int)> m_listButtonBarSwitchedPage;
-
     void listButtonBarSwitchedPage(ListButtonBar* p0, int p1) override {
-        if (m_listButtonBarSwitchedPage) return m_listButtonBarSwitchedPage(p0, p1);
+        if (m_listButtonBarSwitchedPage) return m_listButtonBarSwitchedPage(this, p0, p1);
     }
 
     static LambdaListButtonBarDelegate* create(
-        std::function<void(ListButtonBar*, int)> const& listButtonBarSwitchedPage = [](auto, auto) {}
+        std::function<void(LambdaListButtonBarDelegate*, ListButtonBar*, int)> const& listButtonBarSwitchedPage = [](auto*, auto*, auto) {}
     ) {
         auto delegate = new LambdaListButtonBarDelegate();
         delegate->m_listButtonBarSwitchedPage = listButtonBarSwitchedPage;

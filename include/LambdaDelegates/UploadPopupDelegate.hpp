@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaUploadPopupDelegate : public cocos2d::CCObject, public UploadPopupDelegate {
+protected:
+    std::function<void(LambdaUploadPopupDelegate*, UploadActionPopup*)> m_onClosePopup;
 public:
-    std::function<void(UploadActionPopup*)> m_onClosePopup;
-
     void onClosePopup(UploadActionPopup* p0) override {
-        if (m_onClosePopup) return m_onClosePopup(p0);
+        if (m_onClosePopup) return m_onClosePopup(this, p0);
     }
 
     static LambdaUploadPopupDelegate* create(
-        std::function<void(UploadActionPopup*)> const& onClosePopup = [](auto) {}
+        std::function<void(LambdaUploadPopupDelegate*, UploadActionPopup*)> const& onClosePopup = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaUploadPopupDelegate();
         delegate->m_onClosePopup = onClosePopup;

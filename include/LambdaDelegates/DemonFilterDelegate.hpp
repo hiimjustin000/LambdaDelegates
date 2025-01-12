@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaDemonFilterDelegate : public cocos2d::CCObject, public DemonFilterDelegate {
+protected:
+    std::function<void(LambdaDemonFilterDelegate*, int)> m_demonFilterSelectClosed;
 public:
-    std::function<void(int)> m_demonFilterSelectClosed;
-
     void demonFilterSelectClosed(int p0) override {
-        if (m_demonFilterSelectClosed) return m_demonFilterSelectClosed(p0);
+        if (m_demonFilterSelectClosed) return m_demonFilterSelectClosed(this, p0);
     }
 
     static LambdaDemonFilterDelegate* create(
-        std::function<void(int)> const& demonFilterSelectClosed = [](auto) {}
+        std::function<void(LambdaDemonFilterDelegate*, int)> const& demonFilterSelectClosed = [](auto*, auto) {}
     ) {
         auto delegate = new LambdaDemonFilterDelegate();
         delegate->m_demonFilterSelectClosed = demonFilterSelectClosed;

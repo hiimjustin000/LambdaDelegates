@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGJDailyLevelDelegate : public cocos2d::CCObject, public GJDailyLevelDelegate {
+protected:
+    std::function<void(LambdaGJDailyLevelDelegate*, GJTimedLevelType)> m_dailyStatusFinished;
+    std::function<void(LambdaGJDailyLevelDelegate*, GJTimedLevelType, GJErrorCode)> m_dailyStatusFailed;
 public:
-    std::function<void(GJTimedLevelType)> m_dailyStatusFinished;
-    std::function<void(GJTimedLevelType, GJErrorCode)> m_dailyStatusFailed;
-
     void dailyStatusFinished(GJTimedLevelType p0) override {
-        if (m_dailyStatusFinished) return m_dailyStatusFinished(p0);
+        if (m_dailyStatusFinished) return m_dailyStatusFinished(this, p0);
     }
     void dailyStatusFailed(GJTimedLevelType p0, GJErrorCode p1) override {
-        if (m_dailyStatusFailed) return m_dailyStatusFailed(p0, p1);
+        if (m_dailyStatusFailed) return m_dailyStatusFailed(this, p0, p1);
     }
 
     static LambdaGJDailyLevelDelegate* create(
-        std::function<void(GJTimedLevelType)> const& dailyStatusFinished = [](auto) {},
-        std::function<void(GJTimedLevelType, GJErrorCode)> const& dailyStatusFailed = [](auto, auto) {}
+        std::function<void(LambdaGJDailyLevelDelegate*, GJTimedLevelType)> const& dailyStatusFinished = [](auto*, auto) {},
+        std::function<void(LambdaGJDailyLevelDelegate*, GJTimedLevelType, GJErrorCode)> const& dailyStatusFailed = [](auto*, auto, auto) {}
     ) {
         auto delegate = new LambdaGJDailyLevelDelegate();
         delegate->m_dailyStatusFinished = dailyStatusFinished;

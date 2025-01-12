@@ -46,13 +46,13 @@ public:
         // Create a text input node
         m_textInputNode = CCTextInputNode::create(200.0f, 50.0f, "Text...", "bigFont.fnt");
         // Do stuff with m_textInputNode
-        m_textInputDelegate = LambdaTextInputDelegate::create([this](CCTextInputNode* sender) {
+        m_textInputDelegate = LambdaTextInputDelegate::create([this](LambdaTextInputDelegate* delegate, CCTextInputNode* sender) {
             // Do stuff with text
         }/* Other functions can be added here */);
         m_textInputNode->setDelegate(m_textInputDelegate);
 
         auto glm = GameLevelManager::sharedState();
-        m_levelDownloadDelegate = LambdaLevelDownloadDelegate::create([this](GJGameLevel* level) {
+        m_levelDownloadDelegate = LambdaLevelDownloadDelegate::create([this](LambdaLevelDownloadDelegate* delegate, GJGameLevel* level) {
             // Do stuff with level
         }, [this](int error) {
             // Do stuff with error

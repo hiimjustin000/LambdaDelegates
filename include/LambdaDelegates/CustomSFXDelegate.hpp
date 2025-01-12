@@ -6,27 +6,27 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaCustomSFXDelegate : public cocos2d::CCObject, public CustomSFXDelegate {
+protected:
+    std::function<void(LambdaCustomSFXDelegate*, SFXInfoObject*)> m_sfxObjectSelected;
+    std::function<int(LambdaCustomSFXDelegate*)> m_getActiveSFXID;
+    std::function<bool(LambdaCustomSFXDelegate*, SFXInfoObject*)> m_overridePlaySFX;
 public:
-    std::function<void(SFXInfoObject*)> m_sfxObjectSelected;
-    std::function<int()> m_getActiveSFXID;
-    std::function<bool(SFXInfoObject*)> m_overridePlaySFX;
-
     void sfxObjectSelected(SFXInfoObject* p0) override {
-        if (m_sfxObjectSelected) return m_sfxObjectSelected(p0);
+        if (m_sfxObjectSelected) return m_sfxObjectSelected(this, p0);
     }
     int getActiveSFXID() override {
-        if (m_getActiveSFXID) return m_getActiveSFXID();
+        if (m_getActiveSFXID) return m_getActiveSFXID(this);
         return 0;
     }
     bool overridePlaySFX(SFXInfoObject* p0) override {
-        if (m_overridePlaySFX) return m_overridePlaySFX(p0);
+        if (m_overridePlaySFX) return m_overridePlaySFX(this, p0);
         return false;
     }
 
     static LambdaCustomSFXDelegate* create(
-        std::function<void(SFXInfoObject*)> const& sfxObjectSelected = [](auto) {},
-        std::function<int()> const& getActiveSFXID = []() { return 0; },
-        std::function<bool(SFXInfoObject*)> const& overridePlaySFX = [](auto) { return false; }
+        std::function<void(LambdaCustomSFXDelegate*, SFXInfoObject*)> const& sfxObjectSelected = [](auto*, auto*) {},
+        std::function<int(LambdaCustomSFXDelegate*)> const& getActiveSFXID = [](auto*) { return 0; },
+        std::function<bool(LambdaCustomSFXDelegate*, SFXInfoObject*)> const& overridePlaySFX = [](auto*, auto*) { return false; }
     ) {
         auto delegate = new LambdaCustomSFXDelegate();
         delegate->m_sfxObjectSelected = sfxObjectSelected;

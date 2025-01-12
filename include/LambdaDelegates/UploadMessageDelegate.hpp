@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaUploadMessageDelegate : public cocos2d::CCObject, public UploadMessageDelegate {
+protected:
+    std::function<void(LambdaUploadMessageDelegate*, int)> m_uploadMessageFinished;
+    std::function<void(LambdaUploadMessageDelegate*, int)> m_uploadMessageFailed;
 public:
-    std::function<void(int)> m_uploadMessageFinished;
-    std::function<void(int)> m_uploadMessageFailed;
-
     void uploadMessageFinished(int p0) override {
-        if (m_uploadMessageFinished) return m_uploadMessageFinished(p0);
+        if (m_uploadMessageFinished) return m_uploadMessageFinished(this, p0);
     }
     void uploadMessageFailed(int p0) override {
-        if (m_uploadMessageFailed) return m_uploadMessageFailed(p0);
+        if (m_uploadMessageFailed) return m_uploadMessageFailed(this, p0);
     }
 
     static LambdaUploadMessageDelegate* create(
-        std::function<void(int)> const& uploadMessageFinished = [](auto) {},
-        std::function<void(int)> const& uploadMessageFailed = [](auto) {}
+        std::function<void(LambdaUploadMessageDelegate*, int)> const& uploadMessageFinished = [](auto*, auto) {},
+        std::function<void(LambdaUploadMessageDelegate*, int)> const& uploadMessageFailed = [](auto*, auto) {}
     ) {
         auto delegate = new LambdaUploadMessageDelegate();
         delegate->m_uploadMessageFinished = uploadMessageFinished;

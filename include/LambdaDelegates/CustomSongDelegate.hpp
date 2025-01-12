@@ -7,33 +7,33 @@
 #include <Geode/c++stl/gdstdlib.hpp>
 
 class LambdaCustomSongDelegate : public cocos2d::CCObject, public CustomSongDelegate {
+protected:
+    std::function<void(LambdaCustomSongDelegate*, int)> m_songIDChanged;
+    std::function<int(LambdaCustomSongDelegate*)> m_getActiveSongID;
+    std::function<gd::string(LambdaCustomSongDelegate*)> m_getSongFileName;
+    std::function<LevelSettingsObject*(LambdaCustomSongDelegate*)> m_getLevelSettings;
 public:
-    std::function<void(int)> m_songIDChanged;
-    std::function<int()> m_getActiveSongID;
-    std::function<gd::string()> m_getSongFileName;
-    std::function<LevelSettingsObject*()> m_getLevelSettings;
-
     void songIDChanged(int p0) override {
-        if (m_songIDChanged) return m_songIDChanged(p0);
+        if (m_songIDChanged) return m_songIDChanged(this, p0);
     }
     int getActiveSongID() override {
-        if (m_getActiveSongID) return m_getActiveSongID();
+        if (m_getActiveSongID) return m_getActiveSongID(this);
         return 0;
     }
     gd::string getSongFileName() override {
-        if (m_getSongFileName) return m_getSongFileName();
+        if (m_getSongFileName) return m_getSongFileName(this);
         throw std::runtime_error("Lambda Delegates: CustomSongDelegate::getSongFileName not implemented");
     }
     LevelSettingsObject* getLevelSettings() override {
-        if (m_getLevelSettings) return m_getLevelSettings();
+        if (m_getLevelSettings) return m_getLevelSettings(this);
         throw std::runtime_error("Lambda Delegates: CustomSongDelegate::getLevelSettings not implemented");
     }
 
     static LambdaCustomSongDelegate* create(
-        std::function<void(int)> const& songIDChanged/* = [](auto) {}*/,
-        std::function<int()> const& getActiveSongID/* = []() { return 0; }*/,
-        std::function<gd::string()> const& getSongFileName,
-        std::function<LevelSettingsObject*()> const& getLevelSettings
+        std::function<void(LambdaCustomSongDelegate*, int)> const& songIDChanged = [](auto*, auto) {},
+        std::function<int(LambdaCustomSongDelegate*)> const& getActiveSongID = [](auto*) { return 0; },
+        std::function<gd::string(LambdaCustomSongDelegate*)> const& getSongFileName = nullptr,
+        std::function<LevelSettingsObject*(LambdaCustomSongDelegate*)> const& getLevelSettings = nullptr
     ) {
         auto delegate = new LambdaCustomSongDelegate();
         delegate->m_songIDChanged = songIDChanged;

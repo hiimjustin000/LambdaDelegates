@@ -6,25 +6,25 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaUserInfoDelegate : public cocos2d::CCObject, public UserInfoDelegate {
+protected:
+    std::function<void(LambdaUserInfoDelegate*, GJUserScore*)> m_getUserInfoFinished;
+    std::function<void(LambdaUserInfoDelegate*, int)> m_getUserInfoFailed;
+    std::function<void(LambdaUserInfoDelegate*, GJUserScore*)> m_userInfoChanged;
 public:
-    std::function<void(GJUserScore*)> m_getUserInfoFinished;
-    std::function<void(int)> m_getUserInfoFailed;
-    std::function<void(GJUserScore*)> m_userInfoChanged;
-
     void getUserInfoFinished(GJUserScore* p0) override {
-        if (m_getUserInfoFinished) return m_getUserInfoFinished(p0);
+        if (m_getUserInfoFinished) return m_getUserInfoFinished(this, p0);
     }
     void getUserInfoFailed(int p0) override {
-        if (m_getUserInfoFailed) return m_getUserInfoFailed(p0);
+        if (m_getUserInfoFailed) return m_getUserInfoFailed(this, p0);
     }
     void userInfoChanged(GJUserScore* p0) override {
-        if (m_userInfoChanged) return m_userInfoChanged(p0);
+        if (m_userInfoChanged) return m_userInfoChanged(this, p0);
     }
 
     static LambdaUserInfoDelegate* create(
-        std::function<void(GJUserScore*)> const& getUserInfoFinished = [](auto) {},
-        std::function<void(int)> const& getUserInfoFailed = [](auto) {},
-        std::function<void(GJUserScore*)> const& userInfoChanged = [](auto) {}
+        std::function<void(LambdaUserInfoDelegate*, GJUserScore*)> const& getUserInfoFinished = [](auto*, auto*) {},
+        std::function<void(LambdaUserInfoDelegate*, int)> const& getUserInfoFailed = [](auto*, auto) {},
+        std::function<void(LambdaUserInfoDelegate*, GJUserScore*)> const& userInfoChanged = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaUserInfoDelegate();
         delegate->m_getUserInfoFinished = getUserInfoFinished;

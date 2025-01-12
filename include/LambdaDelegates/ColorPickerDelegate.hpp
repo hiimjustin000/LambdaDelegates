@@ -7,14 +7,14 @@
 
 class LambdaColorPickerDelegate : public cocos2d::CCObject, public cocos2d::extension::ColorPickerDelegate {
 public:
-    std::function<void(cocos2d::ccColor3B)> m_colorValueChanged;
+    std::function<void(LambdaColorPickerDelegate*, cocos2d::ccColor3B)> m_colorValueChanged;
 
     void colorValueChanged(cocos2d::ccColor3B p0) override {
-        if (m_colorValueChanged) return m_colorValueChanged(p0);
+        if (m_colorValueChanged) return m_colorValueChanged(this, p0);
     }
 
     static LambdaColorPickerDelegate* create(
-        std::function<void(cocos2d::ccColor3B)> const& colorValueChanged = [](auto) {}
+        std::function<void(LambdaColorPickerDelegate*, cocos2d::ccColor3B)> const& colorValueChanged = [](auto*, auto) {}
     ) {
         auto delegate = new LambdaColorPickerDelegate();
         delegate->m_colorValueChanged = colorValueChanged;

@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaCurrencyRewardDelegate : public cocos2d::CCObject, public CurrencyRewardDelegate {
+protected:
+    std::function<void(LambdaCurrencyRewardDelegate*, CurrencyRewardLayer*)> m_currencyWillExit;
 public:
-    std::function<void(CurrencyRewardLayer*)> m_currencyWillExit;
-
     void currencyWillExit(CurrencyRewardLayer* p0) override {
-        if (m_currencyWillExit) return m_currencyWillExit(p0);
+        if (m_currencyWillExit) return m_currencyWillExit(this, p0);
     }
 
     static LambdaCurrencyRewardDelegate* create(
-        std::function<void(CurrencyRewardLayer*)> const& currencyWillExit = [](auto) {}
+        std::function<void(LambdaCurrencyRewardDelegate*, CurrencyRewardLayer*)> const& currencyWillExit = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaCurrencyRewardDelegate();
         delegate->m_currencyWillExit = currencyWillExit;

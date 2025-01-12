@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGooglePlayDelegate : public cocos2d::CCObject, public GooglePlayDelegate {
+protected:
+    std::function<void(LambdaGooglePlayDelegate*)> m_googlePlaySignedIn;
 public:
-    std::function<void()> m_googlePlaySignedIn;
-
     void googlePlaySignedIn() override {
-        if (m_googlePlaySignedIn) return m_googlePlaySignedIn();
+        if (m_googlePlaySignedIn) return m_googlePlaySignedIn(this);
     }
 
     static LambdaGooglePlayDelegate* create(
-        std::function<void()> const& googlePlaySignedIn = []() {}
+        std::function<void(LambdaGooglePlayDelegate*)> const& googlePlaySignedIn = [](auto*) {}
     ) {
         auto delegate = new LambdaGooglePlayDelegate();
         delegate->m_googlePlaySignedIn = googlePlaySignedIn;

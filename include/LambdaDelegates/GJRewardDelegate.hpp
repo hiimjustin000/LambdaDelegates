@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGJRewardDelegate : public cocos2d::CCObject, public GJRewardDelegate {
+protected:
+    std::function<void(LambdaGJRewardDelegate*, int)> m_rewardsStatusFinished;
+    std::function<void(LambdaGJRewardDelegate*)> m_rewardsStatusFailed;
 public:
-    std::function<void(int)> m_rewardsStatusFinished;
-    std::function<void()> m_rewardsStatusFailed;
-
     void rewardsStatusFinished(int p0) override {
-        if (m_rewardsStatusFinished) return m_rewardsStatusFinished(p0);
+        if (m_rewardsStatusFinished) return m_rewardsStatusFinished(this, p0);
     }
     void rewardsStatusFailed() override {
-        if (m_rewardsStatusFailed) return m_rewardsStatusFailed();
+        if (m_rewardsStatusFailed) return m_rewardsStatusFailed(this);
     }
 
     static LambdaGJRewardDelegate* create(
-        std::function<void(int)> const& rewardsStatusFinished = [](auto) {},
-        std::function<void()> const& rewardsStatusFailed = []() {}
+        std::function<void(LambdaGJRewardDelegate*, int)> const& rewardsStatusFinished = [](auto*, auto) {},
+        std::function<void(LambdaGJRewardDelegate*)> const& rewardsStatusFailed = [](auto*) {}
     ) {
         auto delegate = new LambdaGJRewardDelegate();
         delegate->m_rewardsStatusFinished = rewardsStatusFinished;

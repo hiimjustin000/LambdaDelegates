@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGJAccountBackupDelegate : public cocos2d::CCObject, public GJAccountBackupDelegate {
+protected:
+    std::function<void(LambdaGJAccountBackupDelegate*)> m_backupAccountFinished;
+    std::function<void(LambdaGJAccountBackupDelegate*, BackupAccountError, int)> m_backupAccountFailed;
 public:
-    std::function<void()> m_backupAccountFinished;
-    std::function<void(BackupAccountError, int)> m_backupAccountFailed;
-
     void backupAccountFinished() override {
-        if (m_backupAccountFinished) return m_backupAccountFinished();
+        if (m_backupAccountFinished) return m_backupAccountFinished(this);
     }
     void backupAccountFailed(BackupAccountError p0, int p1) override {
-        if (m_backupAccountFailed) return m_backupAccountFailed(p0, p1);
+        if (m_backupAccountFailed) return m_backupAccountFailed(this, p0, p1);
     }
 
     static LambdaGJAccountBackupDelegate* create(
-        std::function<void()> const& backupAccountFinished = []() {},
-        std::function<void(BackupAccountError, int)> const& backupAccountFailed = [](auto, auto) {}
+        std::function<void(LambdaGJAccountBackupDelegate*)> const& backupAccountFinished = [](auto*) {},
+        std::function<void(LambdaGJAccountBackupDelegate*, BackupAccountError, int)> const& backupAccountFailed = [](auto*, auto, auto) {}
     ) {
         auto delegate = new LambdaGJAccountBackupDelegate();
         delegate->m_backupAccountFinished = backupAccountFinished;

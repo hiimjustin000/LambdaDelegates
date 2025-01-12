@@ -6,20 +6,20 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGJAccountSettingsDelegate : public cocos2d::CCObject, public GJAccountSettingsDelegate {
+protected:
+    std::function<void(LambdaGJAccountSettingsDelegate*)> m_updateSettingsFinished;
+    std::function<void(LambdaGJAccountSettingsDelegate*)> m_updateSettingsFailed;
 public:
-    std::function<void()> m_updateSettingsFinished;
-    std::function<void()> m_updateSettingsFailed;
-
     void updateSettingsFinished() override {
-        if (m_updateSettingsFinished) return m_updateSettingsFinished();
+        if (m_updateSettingsFinished) return m_updateSettingsFinished(this);
     }
     void updateSettingsFailed() override {
-        if (m_updateSettingsFailed) return m_updateSettingsFailed();
+        if (m_updateSettingsFailed) return m_updateSettingsFailed(this);
     }
 
     static LambdaGJAccountSettingsDelegate* create(
-        std::function<void()> const& updateSettingsFinished = []() {},
-        std::function<void()> const& updateSettingsFailed = []() {}
+        std::function<void(LambdaGJAccountSettingsDelegate*)> const& updateSettingsFinished = [](auto*) {},
+        std::function<void(LambdaGJAccountSettingsDelegate*)> const& updateSettingsFailed = [](auto*) {}
     ) {
         auto delegate = new LambdaGJAccountSettingsDelegate();
         delegate->m_updateSettingsFinished = updateSettingsFinished;

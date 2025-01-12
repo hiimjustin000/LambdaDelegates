@@ -6,45 +6,45 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGJScaleControlDelegate : public cocos2d::CCObject, public GJScaleControlDelegate {
+protected:
+    std::function<void(LambdaGJScaleControlDelegate*, float, bool)> m_scaleXChanged;
+    std::function<void(LambdaGJScaleControlDelegate*, float, bool)> m_scaleYChanged;
+    std::function<void(LambdaGJScaleControlDelegate*, float, float, bool)> m_scaleXYChanged;
+    std::function<void(LambdaGJScaleControlDelegate*)> m_scaleChangeBegin;
+    std::function<void(LambdaGJScaleControlDelegate*)> m_scaleChangeEnded;
+    std::function<void(LambdaGJScaleControlDelegate*)> m_updateScaleControl;
+    std::function<void(LambdaGJScaleControlDelegate*, cocos2d::CCPoint)> m_anchorPointMoved;
 public:
-    std::function<void(float, bool)> m_scaleXChanged;
-    std::function<void(float, bool)> m_scaleYChanged;
-    std::function<void(float, float, bool)> m_scaleXYChanged;
-    std::function<void()> m_scaleChangeBegin;
-    std::function<void()> m_scaleChangeEnded;
-    std::function<void()> m_updateScaleControl;
-    std::function<void(cocos2d::CCPoint)> m_anchorPointMoved;
-
     void scaleXChanged(float p0, bool p1) override {
-        if (m_scaleXChanged) return m_scaleXChanged(p0, p1);
+        if (m_scaleXChanged) return m_scaleXChanged(this, p0, p1);
     }
     void scaleYChanged(float p0, bool p1) override {
-        if (m_scaleYChanged) return m_scaleYChanged(p0, p1);
+        if (m_scaleYChanged) return m_scaleYChanged(this, p0, p1);
     }
     void scaleXYChanged(float p0, float p1, bool p2) override {
-        if (m_scaleXYChanged) return m_scaleXYChanged(p0, p1, p2);
+        if (m_scaleXYChanged) return m_scaleXYChanged(this, p0, p1, p2);
     }
     void scaleChangeBegin() override {
-        if (m_scaleChangeBegin) return m_scaleChangeBegin();
+        if (m_scaleChangeBegin) return m_scaleChangeBegin(this);
     }
     void scaleChangeEnded() override {
-        if (m_scaleChangeEnded) return m_scaleChangeEnded();
+        if (m_scaleChangeEnded) return m_scaleChangeEnded(this);
     }
     void updateScaleControl() override {
-        if (m_updateScaleControl) return m_updateScaleControl();
+        if (m_updateScaleControl) return m_updateScaleControl(this);
     }
     void anchorPointMoved(cocos2d::CCPoint p0) override {
-        if (m_anchorPointMoved) return m_anchorPointMoved(p0);
+        if (m_anchorPointMoved) return m_anchorPointMoved(this, p0);
     }
 
     static LambdaGJScaleControlDelegate* create(
-        std::function<void(float, bool)> const& scaleXChanged = [](auto, auto) {},
-        std::function<void(float, bool)> const& scaleYChanged = [](auto, auto) {},
-        std::function<void(float, float, bool)> const& scaleXYChanged = [](auto, auto, auto) {},
-        std::function<void()> const& scaleChangeBegin = []() {},
-        std::function<void()> const& scaleChangeEnded = []() {},
-        std::function<void()> const& updateScaleControl = []() {},
-        std::function<void(cocos2d::CCPoint)> const& anchorPointMoved = [](auto) {}
+        std::function<void(LambdaGJScaleControlDelegate*, float, bool)> const& scaleXChanged = [](auto*, auto, auto) {},
+        std::function<void(LambdaGJScaleControlDelegate*, float, bool)> const& scaleYChanged = [](auto*, auto, auto) {},
+        std::function<void(LambdaGJScaleControlDelegate*, float, float, bool)> const& scaleXYChanged = [](auto*, auto, auto, auto) {},
+        std::function<void(LambdaGJScaleControlDelegate*)> const& scaleChangeBegin = [](auto*) {},
+        std::function<void(LambdaGJScaleControlDelegate*)> const& scaleChangeEnded = [](auto*) {},
+        std::function<void(LambdaGJScaleControlDelegate*)> const& updateScaleControl = [](auto*) {},
+        std::function<void(LambdaGJScaleControlDelegate*, cocos2d::CCPoint)> const& anchorPointMoved = [](auto*, auto) {}
     ) {
         auto delegate = new LambdaGJScaleControlDelegate();
         delegate->m_scaleXChanged = scaleXChanged;

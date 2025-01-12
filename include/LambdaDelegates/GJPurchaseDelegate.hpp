@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGJPurchaseDelegate : public cocos2d::CCObject, public GJPurchaseDelegate {
+protected:
+    std::function<void(LambdaGJPurchaseDelegate*, GJStoreItem*)> m_didPurchaseItem;
 public:
-    std::function<void(GJStoreItem*)> m_didPurchaseItem;
-
     void didPurchaseItem(GJStoreItem* p0) override {
-        if (m_didPurchaseItem) return m_didPurchaseItem(p0);
+        if (m_didPurchaseItem) return m_didPurchaseItem(this, p0);
     }
 
     static LambdaGJPurchaseDelegate* create(
-        std::function<void(GJStoreItem*)> const& didPurchaseItem = [](auto) {}
+        std::function<void(LambdaGJPurchaseDelegate*, GJStoreItem*)> const& didPurchaseItem = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaGJPurchaseDelegate();
         delegate->m_didPurchaseItem = didPurchaseItem;

@@ -7,15 +7,15 @@
 #include <Geode/c++stl/gdstdlib.hpp>
 
 class LambdaSetTextPopupDelegate : public cocos2d::CCObject, public SetTextPopupDelegate {
+protected:
+    std::function<void(LambdaSetTextPopupDelegate*, SetTextPopup*, gd::string)> m_setTextPopupClosed;
 public:
-    std::function<void(SetTextPopup*, gd::string)> m_setTextPopupClosed;
-
     void setTextPopupClosed(SetTextPopup* p0, gd::string p1) override {
-        if (m_setTextPopupClosed) return m_setTextPopupClosed(p0, p1);
+        if (m_setTextPopupClosed) return m_setTextPopupClosed(this, p0, p1);
     }
 
     static LambdaSetTextPopupDelegate* create(
-        std::function<void(SetTextPopup*, gd::string)> const& setTextPopupClosed = [](auto, auto) {}
+        std::function<void(LambdaSetTextPopupDelegate*, SetTextPopup*, gd::string)> const& setTextPopupClosed = [](auto*, auto*, auto) {}
     ) {
         auto delegate = new LambdaSetTextPopupDelegate();
         delegate->m_setTextPopupClosed = setTextPopupClosed;

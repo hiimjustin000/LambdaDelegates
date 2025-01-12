@@ -6,30 +6,30 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaLeaderboardManagerDelegate : public cocos2d::CCObject, public LeaderboardManagerDelegate {
+protected:
+    std::function<void(LambdaLeaderboardManagerDelegate*)> m_updateUserScoreFinished;
+    std::function<void(LambdaLeaderboardManagerDelegate*)> m_updateUserScoreFailed;
+    std::function<void(LambdaLeaderboardManagerDelegate*, cocos2d::CCArray*, char const*)> m_loadLeaderboardFinished;
+    std::function<void(LambdaLeaderboardManagerDelegate*, char const*)> m_loadLeaderboardFailed;
 public:
-    std::function<void()> m_updateUserScoreFinished;
-    std::function<void()> m_updateUserScoreFailed;
-    std::function<void(cocos2d::CCArray*, char const*)> m_loadLeaderboardFinished;
-    std::function<void(char const*)> m_loadLeaderboardFailed;
-
     void updateUserScoreFinished() override {
-        if (m_updateUserScoreFinished) return m_updateUserScoreFinished();
+        if (m_updateUserScoreFinished) return m_updateUserScoreFinished(this);
     }
     void updateUserScoreFailed() override {
-        if (m_updateUserScoreFailed) return m_updateUserScoreFailed();
+        if (m_updateUserScoreFailed) return m_updateUserScoreFailed(this);
     }
     void loadLeaderboardFinished(cocos2d::CCArray* p0, char const* p1) override {
-        if (m_loadLeaderboardFinished) return m_loadLeaderboardFinished(p0, p1);
+        if (m_loadLeaderboardFinished) return m_loadLeaderboardFinished(this, p0, p1);
     }
     void loadLeaderboardFailed(char const* p0) override {
-        if (m_loadLeaderboardFailed) return m_loadLeaderboardFailed(p0);
+        if (m_loadLeaderboardFailed) return m_loadLeaderboardFailed(this, p0);
     }
 
     static LambdaLeaderboardManagerDelegate* create(
-        std::function<void()> const& updateUserScoreFinished = []() {},
-        std::function<void()> const& updateUserScoreFailed = []() {},
-        std::function<void(cocos2d::CCArray*, char const*)> const& loadLeaderboardFinished = [](auto, auto) {},
-        std::function<void(char const*)> const& loadLeaderboardFailed = [](auto) {}
+        std::function<void(LambdaLeaderboardManagerDelegate*)> const& updateUserScoreFinished = [](auto*) {},
+        std::function<void(LambdaLeaderboardManagerDelegate*)> const& updateUserScoreFailed = [](auto*) {},
+        std::function<void(LambdaLeaderboardManagerDelegate*, cocos2d::CCArray*, char const*)> const& loadLeaderboardFinished = [](auto*, auto*, auto const*) {},
+        std::function<void(LambdaLeaderboardManagerDelegate*, char const*)> const& loadLeaderboardFailed = [](auto*, auto const*) {}
     ) {
         auto delegate = new LambdaLeaderboardManagerDelegate();
         delegate->m_updateUserScoreFinished = updateUserScoreFinished;

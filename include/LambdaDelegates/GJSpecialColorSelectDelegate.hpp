@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGJSpecialColorSelectDelegate : public cocos2d::CCObject, public GJSpecialColorSelectDelegate {
+protected:
+    std::function<void(LambdaGJSpecialColorSelectDelegate*, GJSpecialColorSelect*, int)> m_colorSelectClosed;
 public:
-    std::function<void(GJSpecialColorSelect*, int)> m_colorSelectClosed;
-
     void colorSelectClosed(GJSpecialColorSelect* p0, int p1) override {
-        if (m_colorSelectClosed) return m_colorSelectClosed(p0, p1);
+        if (m_colorSelectClosed) return m_colorSelectClosed(this, p0, p1);
     }
 
     static LambdaGJSpecialColorSelectDelegate* create(
-        std::function<void(GJSpecialColorSelect*, int)> const& colorSelectClosed = [](auto, auto) {}
+        std::function<void(LambdaGJSpecialColorSelectDelegate*, GJSpecialColorSelect*, int)> const& colorSelectClosed = [](auto*, auto*, auto) {}
     ) {
         auto delegate = new LambdaGJSpecialColorSelectDelegate();
         delegate->m_colorSelectClosed = colorSelectClosed;

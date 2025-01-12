@@ -6,15 +6,15 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaGJDropDownLayerDelegate : public cocos2d::CCObject, public GJDropDownLayerDelegate {
+protected:
+    std::function<void(LambdaGJDropDownLayerDelegate*, GJDropDownLayer*)> m_dropDownLayerWillClose;
 public:
-    std::function<void(GJDropDownLayer*)> m_dropDownLayerWillClose;
-
     void dropDownLayerWillClose(GJDropDownLayer* p0) override {
-        if (m_dropDownLayerWillClose) return m_dropDownLayerWillClose(p0);
+        if (m_dropDownLayerWillClose) return m_dropDownLayerWillClose(this, p0);
     }
 
     static LambdaGJDropDownLayerDelegate* create(
-        std::function<void(GJDropDownLayer*)> const& dropDownLayerWillClose = [](auto) {}
+        std::function<void(LambdaGJDropDownLayerDelegate*, GJDropDownLayer*)> const& dropDownLayerWillClose = [](auto*, auto*) {}
     ) {
         auto delegate = new LambdaGJDropDownLayerDelegate();
         delegate->m_dropDownLayerWillClose = dropDownLayerWillClose;
