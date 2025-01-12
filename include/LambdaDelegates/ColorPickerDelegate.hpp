@@ -6,9 +6,9 @@
 #include <Geode/GeneratedPredeclare.hpp>
 
 class LambdaColorPickerDelegate : public cocos2d::CCObject, public cocos2d::extension::ColorPickerDelegate {
-public:
+protected:
     std::function<void(LambdaColorPickerDelegate*, cocos2d::ccColor3B)> m_colorValueChanged;
-
+public:
     void colorValueChanged(cocos2d::ccColor3B p0) override {
         if (m_colorValueChanged) return m_colorValueChanged(this, p0);
     }
